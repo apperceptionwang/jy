@@ -1,0 +1,163 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1F4BEB37-B38A-4921-8CA7-34C9340BFB93}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Bincess.Components</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Bincess.Components</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MyResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Web\ClientRunTimeRender.cs" />
+    <Compile Include="Web\GroupList\GroupTag.cs" />
+    <Compile Include="Web\GroupList\GroupTagControlBuilder.cs" />
+    <Compile Include="Web\GroupList\IRenderable.cs" />
+    <Compile Include="Web\GroupList\ItemTag.cs" />
+    <Compile Include="Web\GroupList\WebGroupList.cs" />
+    <Compile Include="Web\GroupList\WebGroupListControlBuilder.cs" />
+    <Compile Include="Web\IClientRunTime.cs" />
+    <Compile Include="Web\MyHttpHandler.cs" />
+    <Compile Include="Web\TextPane\ColorDropDownList.cs" />
+    <Compile Include="Web\TextPane\DesignPane.cs" />
+    <Compile Include="Web\TextPane\TextModel.cs" />
+    <Compile Include="Web\TextPane\Toolbar1.cs" />
+    <Compile Include="Web\TextPane\Toolbar2.cs" />
+    <Compile Include="Web\TextPane\ToolbarBase.cs" />
+    <Compile Include="Web\TextPane\ToolbarDropDownList.cs" />
+    <Compile Include="Web\TextPane\ToolbarImageButton.cs" />
+    <Compile Include="Web\TextPane\ToolTips.cs" />
+    <Compile Include="Web\TextPane\WebTextPane.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MyResources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MyResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Anchor.gif" />
+    <EmbeddedResource Include="Resources\Apply_Small.gif" />
+    <EmbeddedResource Include="Resources\BackColor.gif" />
+    <EmbeddedResource Include="Resources\Bold.gif" />
+    <EmbeddedResource Include="Resources\CancelAnchor.gif" />
+    <EmbeddedResource Include="Resources\Copy.gif" />
+    <EmbeddedResource Include="Resources\Cut.gif" />
+    <EmbeddedResource Include="Resources\Eraser.gif" />
+    <EmbeddedResource Include="Resources\ForeColor.gif" />
+    <EmbeddedResource Include="Resources\Indent.gif" />
+    <EmbeddedResource Include="Resources\Italic.gif" />
+    <EmbeddedResource Include="Resources\JustifyCenter.gif" />
+    <EmbeddedResource Include="Resources\JustifyLeft.gif" />
+    <EmbeddedResource Include="Resources\JustifyRight.gif" />
+    <EmbeddedResource Include="Resources\Outdent.gif" />
+    <EmbeddedResource Include="Resources\Paste.gif" />
+    <EmbeddedResource Include="Resources\Picture.gif" />
+    <EmbeddedResource Include="Resources\Rule.gif" />
+    <EmbeddedResource Include="Resources\ToolbarHandler.gif" />
+    <EmbeddedResource Include="Resources\ToolbarSeparator.gif" />
+    <EmbeddedResource Include="Resources\UnderLine.gif" />
+    <EmbeddedResource Include="Resources\Undo.gif" />
+    <EmbeddedResource Include="Resources\WebGroupList.js" />
+    <EmbeddedResource Include="Resources\WebTextPane.css" />
+    <EmbeddedResource Include="Resources\WebTextPane.js" />
+    <EmbeddedResource Include="Resources\WebTextPaneXmlToolTips_ch.xml" />
+    <EmbeddedResource Include="Resources\WebTextPaneXmlToolTips_en.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<toolBar>
+	<button>
+		<commandID>CMD_FONT</commandID>
+		<tipText>字体</tipText>
+	</button>
+	<button>
+		<commandID>CMD_SIZE</commandID>
+		<tipText>字体大小</tipText>
+	</button>
+	<button>
+		<commandID>CMD_BACK_COLOR</commandID>
+		<tipText>背景颜色</tipText>
+	</button>
+	<button>
+		<commandID>CMD_FORE_COLOR</commandID>
+		<tipText>字体颜色</tipText>
+	</button>
+	<button>
+		<commandID>CMD_BOLD</commandID>
+		<tipText>加粗 (Ctrl+B)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_ITALIC</commandID>
+		<tipText>斜体 (Ctrl+I)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_UNDERLINE</commandID>
+		<tipText>下划线 (Ctrl+U)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_INDENT</commandID>
+		<tipText>增加缩进</tipText>
+	</button>
+	<button>
+		<commandID>CMD_OUTDENT</commandID>
+		<tipText>撤销缩进</tipText>
+	</button>
+	<button>
+		<commandID>CMD_JUSTIFY_LEFT</commandID>
+		<tipText>左对齐</tipText>
+	</button>
+	<button>
+		<commandID>CMD_JUSTIFY_CENTER</commandID>
+		<tipText>居中对齐</tipText>
+	</button>
+	<button>
+		<commandID>CMD_JUSTIFY_RIGHT</commandID>
+		<tipText>右对齐</tipText>
+	</button>
+	<button>
+		<commandID>CMD_CUT</commandID>
+		<tipText>剪切 (Ctrl+X)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_COPY</commandID>
+		<tipText>复制 (Ctrl+C)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_PASTE</commandID>
+		<tipText>粘贴 (Ctrl+V)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_UNDO</commandID>
+		<tipText>撤销 (Ctrl+Z)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_ANCHOR</commandID>
+		<tipText>插入超链接</tipText>
+	</button>
+	<button>
+		<commandID>CMD_CANCEL_ANCHOR</commandID>
+		<tipText>取消超链接</tipText>
+	</button>
+	<button>
+		<commandID>CMD_PICTURE</commandID>
+		<tipText>插入图片</tipText>
+	</button>
+	<button>
+		<commandID>CMD_RULE</commandID>
+		<tipText>插入分隔线</tipText>
+	</button>
+	<button>
+		<commandID>CMD_ERASER</commandID>
+		<tipText>取消 HTML 格式</tipText>
+	</button>
+</toolBar>

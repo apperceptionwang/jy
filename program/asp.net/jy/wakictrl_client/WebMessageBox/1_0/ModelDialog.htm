@@ -1,0 +1,181 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+		<title>WebDialog</title>
+		<style type="text/css">
+			<!--
+		td{font-size=11pt}
+		--></style>
+		<script language="javascript">
+			var oMyObject = window.dialogArguments;
+			var sTitle = oMyObject.Title;
+			var sMessage = oMyObject.Message;
+			var sButton = oMyObject.Button;
+			var sIcon = oMyObject.Icon;
+			var sColor = oMyObject.Bgcolor;
+			var iDefaultButton = oMyObject.DefaultButton;
+			try
+			{
+				window.returnValue = -1;
+				document.title = sTitle;
+			}
+			catch(e){}
+
+			function Returnvalue(result){
+				window.returnValue = result;
+				window.close();
+			}
+		</script>
+	</head>
+	<body bgcolor="#D6D3CE" scroll="no" onload="focusbutton(iDefaultButton)" onkeydown="changeSelect()">
+		<p><br>
+			<table align="center" border="0" width="90%" height="90%" ID="Table1">
+				<tr>
+					<td>
+						<script language="javascript">
+	/* Show Icon
+	   None
+	   Error: 	    Error.gif
+	   Information: Information.gif
+	   Question:    Question.gif
+	   Warning:     Warning.gif
+	 */
+	switch( sIcon )
+	{
+		case "None":
+			break;
+		case "Error":
+			document.write ("<img src=\"images/Error.gif\">");
+			break;
+		case "Information":
+			document.write ("<img src=\"images/Information.gif\">");
+			break;
+		case "Question":
+			document.write ("<img src=\"images/Question.gif\">");
+			break;
+		case "Warning":
+			document.write ("<img src=\"images/Warning.gif\">");
+			break;
+	}
+		
+		
+						</script>
+					</td>
+					<td>
+						<script language="javascript">
+	document.write( sMessage );
+						</script>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right">
+						<script language="javascript">
+	/* return value
+	   Cancel : 0
+	   No:      4
+	   Abort:   5
+	   Ok:      1
+	   Yes:     3
+	   Retry:   2
+	   Ignore:   6
+	 */
+	switch( sButton )
+	{
+		case "OK":
+			document.write ("<input type=\"image\" src=\"images/Ok.gif\" id=\"Dialogbutton0\" style=\"cursor:hand\" onclick=\"Returnvalue(1)\">&nbsp;");
+			break;
+		case "OKCancel":
+			{
+				document.write ("<input type=\"image\" src =\"images/Ok.gif\" id=\"Dialogbutton0\" style=\"cursor:hand\" onclick=\"Returnvalue(1)\">&nbsp;");
+				document.write ("<input type=\"image\" src=\"images/Cancel.gif\" id=\"Dialogbutton1\" style=\"cursor:hand\" onclick=\"Returnvalue(0)\">&nbsp;");
+			}
+			break;
+		case "RetryCancel":
+			{
+				document.write ("<input type=\"image\" src=\"images/Retry.gif\" id=\"Dialogbutton0\" style=\"cursor:hand\" onclick=\"Returnvalue(2)\">&nbsp;");
+				document.write ("<input type=\"image\" src=\"images/Cancel.gif\" id=\"Dialogbutton1\" style=\"cursor:hand\" onclick=\"Returnvalue(0)\">&nbsp;");
+			}
+			break;
+		case "YesNo":
+			{	
+				document.write ("<input type=\"image\" src=\"images/Yes.gif\" id=\"Dialogbutton0\" style=\"cursor:hand\" onclick=\"Returnvalue(3)\">&nbsp;");
+				document.write ("<input type=\"image\" src=\"images/No.gif\" id=\"Dialogbutton1\" style=\"cursor:hand\" onclick=\"Returnvalue(4)\">&nbsp;");
+			}
+			break;
+		case "YesNoCancel":
+			{
+				document.write ("<input type=\"image\" src=\"images/Yes.gif\" id=\"Dialogbutton0\" style=\"cursor:hand\" onclick=\"Returnvalue(3)\">&nbsp;");
+				document.write ("<input type=\"image\" src=\"images/No.gif\" id=\"Dialogbutton1\" style=\"cursor:hand\" onclick=\"Returnvalue(4)\">&nbsp;");
+				document.write ("<input type=\"image\" src=\"images/Cancel.gif\" id=\"Dialogbutton2\" style=\"cursor:hand\" onclick=\"Returnvalue(0)\">&nbsp;");
+			}
+			break;
+		case "AbortRetryIgnore":
+			{
+				document.write ("<input type=\"image\" src=\"images/Abort.gif\" id=\"Dialogbutton0\" waki=\"0\" style=\"cursor:hand\" onclick=\"Returnvalue(5)\">&nbsp;");
+				document.write ("<input type=\"image\" src=\"images/Retry.gif\" id=\"Dialogbutton1\" waki=\"1\"  style=\"cursor:hand\" onclick=\"Returnvalue(2)\">&nbsp;");
+				document.write ("<input type=\"image\" src=\"images/Ignore.gif\" id=\"Dialogbutton2\" waki=\"2\"  style=\"cursor:hand\" onclick=\"Returnvalue(6)\">&nbsp;");
+			}
+	}
+						</script>
+				</tr>
+			</table>
+			<script language="javascript">
+
+	function focusbutton(it)
+	{
+	try{
+		switch (it)
+		{
+			case "0":
+				if(document.all("Dialogbutton0")!=null)
+					document.all("Dialogbutton0").focus();
+				break;
+			case "1":
+				if(document.all("Dialogbutton1")!=null)
+					document.all("Dialogbutton1").focus();
+				break;
+			case "2":
+				if(document.all("Dialogbutton2")!=null)
+					document.all("Dialogbutton2").focus();
+				break;
+		}
+	}
+	catch(e){};
+
+	}
+	function changeSelect()
+	{
+	//按光标键时,改变选择按钮,37为向左键，39为向右键
+	try
+	{
+		if(event.keyCode==37)
+			switch ( document.activeElement.id )
+			{
+			case "Dialogbutton1":
+				document.all("Dialogbutton0").focus();
+				break;
+			case "Dialogbutton2":
+				document.all("Dialogbutton1").focus();
+				break;
+			}
+
+		if(event.keyCode==39)
+			switch ( document.activeElement.id )
+			{
+			case "Dialogbutton0":
+				document.all("Dialogbutton1").focus();
+				break;
+			case "Dialogbutton1":
+				document.all("Dialogbutton2").focus();
+				break;
+			}
+	}
+	catch(e){}
+	}
+			</script>
+	</body>
+</html>

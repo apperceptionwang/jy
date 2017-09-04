@@ -1,0 +1,39 @@
+<!--这个源码来自[源码之家-http://Codejia.Com],需要更多精品源码请访问http://Codejia.Com-->
+<HTML>
+<HEAD>
+<TITLE>eWebEditor - 全屏编辑</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<style type="text/css">
+body {	margin: 0px; border: 0px; background-color: buttonface; }
+</style>
+</HEAD>
+<BODY scroll="no" onunload="Minimize()">
+<input type="hidden" id="ContentFullScreen" name="ContentFullScreen" value="">
+
+<script language=javascript>
+
+// BEGIN: URLParams holds all URL passed parameters (like ?Param1=Value1&Param2=Value2)
+var URLParams = new Object() ;
+
+var aParams = document.location.search.substr(1).split('&') ;
+for (i=0 ; i < aParams.length ; i++)
+{
+	var aParam = aParams[i].split('=') ;
+	URLParams[aParam[0]] = aParam[1] ;
+}
+// END: URLParams
+
+ContentFullScreen.value = opener.getHTML();
+document.write('<iframe ID="EditorFullScreen" src="../ewebeditor.asp?id=ContentFullScreen&fullscreen=1&style='+URLParams['style']+'" frameborder="0" scrolling=no width="100%" HEIGHT="100%"></iframe>');
+
+function Minimize() {
+	opener.setHTML(EditorFullScreen.getHTML());
+	self.close();
+}
+
+</script>
+
+</BODY>
+</HTML>
+
+<span style="display:none;">这个源码来自http://Codejia.Com,更多源码请访问<a href="http://Codejia.Com">http://Codejia.Com</a>&nbsp;<a href="http://9host.cn">虚拟主机</a>&nbsp;<a href="http://15883.com">免费域名</a>&nbsp;<a href="http://bestmoban.com">网页模版</a></span>

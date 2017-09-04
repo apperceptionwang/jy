@@ -1,0 +1,104 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+namespace VOD.Admin
+{
+    public partial class set : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            CommFun.IsAdmin();
+            if (!IsPostBack)
+            {
+               
+                string strqry = "select * From T_setup";
+                DataRow drw = DBFun.GetDataRow(strqry);
+                if (drw == null)
+                {
+                    Response.Write("读取数据库失败！");
+                    Response.End();
+                    return;
+                }
+                else
+                {
+                    ReadFromDb(drw);
+                }
+            }
+
+            
+        }
+        protected void ReadFromDb(DataRow drw)
+        {
+            //从数据库读取信息到页面
+
+            tb_WebSiteName.Text = drw["SiteName"].ToString();
+            tb_WebSiteUrl.Text = drw["SiteUrl"].ToString(); 
+            tb_WebKey.Text = drw["SiteKeys"].ToString();
+            tb_WebDes.Text = drw["SiteDes"].ToString();
+            tb_Copyright.Text = drw["Copyright"].ToString();
+            tb_PointCheat.Text = drw["PointCheat"].ToString();           
+            tb_NavMenu.Text = drw["NavMenu"].ToString();           
+            ftb_Notice.Text = drw["NoticeText"].ToString();
+            ftp_WebSiteIntro.Text = drw["introText"].ToString();
+        }
+        protected string GetDataForSave()
+        {
+            
+            //获取网站设置信息，以便保存
+           
+           
+            string strsave = string.Format("Update T_setup set SiteName='{0}',SiteUrl='{1}',SiteKeys='{2}',SiteDes='{3}'"
+                    + ",copyright='{4}',Pointcheat={5},navmenu='{6}',noticetext='{7}',introtext='{8}'",
+                    tb_WebSiteName.Text,tb_WebSiteUrl.Text,tb_WebKey.Text,tb_WebDes.Text,
+                    tb_Copyright.Text,tb_PointCheat.Text,tb_NavMenu.Text.Replace("'","''"),ftb_Notice.Text.Replace("'","''"),ftp_WebSiteIntro.Text.Replace("'","''"));
+
+            return strsave;
+        }
+        protected void btn_AutoMenu_Click(object sender, EventArgs e)
+        {
+            
+            string str_TotalFilm = "";
+            str_TotalFilm = "<Table ID='TableMenu' width='100%'><tr>";                
+            DataView dv = DBFun.GetDataView("select * From T_class where cisopen=1 order by csort asc ");
+            for (int i = 0; i < dv.Table.Rows.Count; i++)
+            {
+                str_TotalFilm += " <td algin='Center'> <IMG src='images/top/top_r6_c3.jpg' border='0' algin='absmiddle'></td>";
+                str_TotalFilm += "<td algin='Center'><a  class='Menu' href='list.aspx?classid=" + dv.Table.Rows[i]["id"].ToString()
+                    + "' >" + dv.Table.Rows[i]["caption"].ToString() + "</a></td>";
+            }
+            str_TotalFilm += "<tr></Table>";
+            tb_NavMenu.Text = str_TotalFilm;
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            //保存
+            try
+            {
+               
+                string strsql = GetDataForSave();
+                //Response.Write(strsql);
+                //Response.Write("<script>alert('保存dd！');</script>");
+                if (DBFun.ExecuteUpdate(strsql))
+                {
+
+                    Response.Write("<script>alert('保存成功！');</script>");
+                }
+                else
+                {
+                    Response.Write("<script>alert('保存失败！');</script>");
+                }
+            }
+            catch 
+            {
+                Response.Write("<script>alert('保存失败！');</script>");
+            }
+        }
+}
+}

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<toolBar>
+	<button>
+		<commandID>CMD_FONT</commandID>
+		<tipText>Font Name</tipText>
+	</button>
+	<button>
+		<commandID>CMD_SIZE</commandID>
+		<tipText>Font Size</tipText>
+	</button>
+	<button>
+		<commandID>CMD_BACK_COLOR</commandID>
+		<tipText>Background Color</tipText>
+	</button>
+	<button>
+		<commandID>CMD_FORE_COLOR</commandID>
+		<tipText>Font Color</tipText>
+	</button>
+	<button>
+		<commandID>CMD_BOLD</commandID>
+		<tipText>Bold (Ctrl+B)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_ITALIC</commandID>
+		<tipText>Italic (Ctrl+I)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_UNDERLINE</commandID>
+		<tipText>Underline (Ctrl+U)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_INDENT</commandID>
+		<tipText>Indent</tipText>
+	</button>
+	<button>
+		<commandID>CMD_OUTDENT</commandID>
+		<tipText>Outdent</tipText>
+	</button>
+	<button>
+		<commandID>CMD_JUSTIFY_LEFT</commandID>
+		<tipText>Justify Left</tipText>
+	</button>
+	<button>
+		<commandID>CMD_JUSTIFY_CENTER</commandID>
+		<tipText>Justify Center</tipText>
+	</button>
+	<button>
+		<commandID>CMD_JUSTIFY_RIGHT</commandID>
+		<tipText>Justify Right</tipText>
+	</button>
+	<button>
+		<commandID>CMD_CUT</commandID>
+		<tipText>Cut (Ctrl+X)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_COPY</commandID>
+		<tipText>Copy (Ctrl+C)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_PASTE</commandID>
+		<tipText>Paste (Ctrl+V)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_UNDO</commandID>
+		<tipText>Undo (Ctrl+Z)</tipText>
+	</button>
+	<button>
+		<commandID>CMD_ANCHOR</commandID>
+		<tipText>Insert Anchor</tipText>
+	</button>
+	<button>
+		<commandID>CMD_CANCEL_ANCHOR</commandID>
+		<tipText>Cancel Anchor</tipText>
+	</button>
+	<button>
+		<commandID>CMD_PICTURE</commandID>
+		<tipText>Insert Picture</tipText>
+	</button>
+	<button>
+		<commandID>CMD_RULE</commandID>
+		<tipText>Insert Rule</tipText>
+	</button>
+	<button>
+		<commandID>CMD_ERASER</commandID>
+		<tipText>Cancel HTML Format</tipText>
+	</button>
+</toolBar>

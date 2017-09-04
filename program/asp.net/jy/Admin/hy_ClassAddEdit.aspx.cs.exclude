@@ -1,0 +1,210 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+namespace VOD.Admin
+{
+    public partial class hy_ClassAddEdit : System.Web.UI.Page
+    {
+      
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                //
+                CommFun.IsAdmin();
+               
+                string Action = Request.QueryString["Action"];
+                string ID = Request.QueryString["ID"];
+                if (Action == null )
+                {
+                    ltl_PageTitle.Text = "新添会员类型";
+                    btn_Ok.Text = "添加";
+                    string strcan = "select * From T_Class";
+                    DataView dv = DBFun.GetDataView(strcan);
+                    lb_Can.DataTextField = "Caption";
+                    lb_Can.DataValueField = "id";
+                    lb_Can.DataSource = dv;
+                    lb_Can.DataBind();
+                }
+                else if (Action=="Edit")
+                {
+                    ltl_PageTitle.Text = "编辑会员类型";
+                    btn_Ok.Text = "确认修改";
+                    ReadFromDb(ID);
+                }
+                else if (Action == "Delete")
+                {
+                    DeleteFromDb(ID);
+                }
+            }
+        }
+        private void ReadFromDb(string ID)
+        {
+            //读取数据并显示
+            string strqry = string.Format("select * From T_Uclass where id={0}", ID);
+            DataRow dr = DBFun.GetDataRow(strqry);
+            if (dr == null)
+            {
+                Response.Write("<Script>alert('读取失败！');history.go(-1);</script>");
+                Response.End();
+            }
+            else
+            {
+                tb_Utype.Text = dr["Utype"].ToString();
+                tb_Uidx.Text = dr["Uidx"].ToString();
+                tb_Uday.Text = dr["Uday"].ToString();
+                tb_Umoney.Text = dr["Umoney"].ToString();
+                tb_Uplay.Text = dr["Uplay"].ToString();
+                tb_Udown.Text = dr["Udown"].ToString();
+                ftb_Des.Text = dr["UIntro"].ToString();
+                ReadCantBoard(dr["UCantBoard"].ToString());
+
+            }
+        }
+        private void DeleteFromDb(string ID)
+        {
+            //删除一个记录
+            string strsql = string.Format("Delete From T_Uclass where id={0}",ID);
+            if (DBFun.ExecuteUpdate(strsql))
+            {
+                Response.Write("<script>alert('删除成功！');");
+                Response.Redirect(Request.UrlReferrer.ToString());
+            }
+
+        }
+        private void ReadCantBoard(string CantBoard)
+        {
+            //读取不可进入版块
+            string strcant = string.Format("select * From T_Class where id in(99,{0})", CantBoard);
+            DataView dv = DBFun.GetDataView(strcant);
+            lb_Cant.DataTextField = "Caption";
+            lb_Cant.DataValueField = "id";
+            lb_Cant.DataSource = dv;
+            lb_Cant.DataBind();
+            //读取可进入版块
+            string strcan = string.Format("select * From T_class where id not in(99,{0})", CantBoard);  //99 并不存在
+            dv = DBFun.GetDataView(strcan);
+            lb_Can.DataTextField = "Caption";
+            lb_Can.DataValueField = "id";
+            lb_Can.DataSource = dv;
+            lb_Can.DataBind();
+            
+
+        }
+        protected void btn_ToCant_Click(object sender, EventArgs e)
+        {
+            //放入去不可进
+            int sel = lb_Can.SelectedIndex;
+            if (sel != -1)
+            {
+                lb_Cant.Items.Add(lb_Can.Items[sel]);
+                lb_Can.Items.Remove(lb_Can.Items[sel]);
+            }
+        }
+        protected void Btn_ToCan_Click(object sender, EventArgs e)
+        {
+           //回可进
+            int sel = lb_Cant.SelectedIndex;
+            if (sel != -1)
+            {
+                lb_Can.Items.Add(lb_Cant.Items[sel]);
+                lb_Cant.Items.Remove(lb_Cant.Items[sel]);
+            }
+        }
+        protected void btn_Ok_Click(object sender, EventArgs e)
+        {
+            //保存
+            string smsg = BeforSave();
+            if (smsg != "")
+            {
+                Response.Write(@"<script>alert('"+smsg+ "');</script>");
+                return;
+            }
+                                
+            if (btn_Ok.Text == "添加")
+            {
+                try
+                {
+                    string strsql = string.Format("Insert into T_Uclass(Utype,Umoney,Uday,Uplay,Udown,Uidx,Ucantboard,Uintro) "
+                                            + " values('{0}',{1},{2},{3},{4},{5},'{6}','{7}')",
+                                            tb_Utype.Text, tb_Umoney.Text, tb_Uday.Text, tb_Uplay.Text, tb_Udown.Text,
+                                            tb_Uidx.Text, GetCantBoard(), ftb_Des.Text.Replace("'", "''"));
+                    if (DBFun.ExecuteUpdate(strsql))
+                    {
+                        Response.Write("<script>alert('数据添加成功！');window.location.href='hy_classAddEdit.aspx?Action=Edit&id="+DBFun.SearchValue("select Max(id) from T_uclass")+"';</script>");
+                    }
+                    else
+                        Response.Write("<scritp>alert('添加失败！请检查是否填写正确。');</script>");
+
+                }
+                catch(Exception ex)
+                {
+                    Response.Write(@"<script>alert('添加失败！请检查是否填写正确！"+ex.Message +"');</script>");
+
+                }
+            }
+            else if (btn_Ok.Text == "确认修改")
+            {
+                try
+                {
+                    string strsql = string.Format("Update T_Uclass Set Utype='{0}',Umoney={1},Uday={2},Uplay={3},Udown={4},"
+                                            + "Uidx={5},UCantBoard='{6}',UIntro='{7}' where id={8}",
+                                            tb_Utype.Text, tb_Umoney.Text, tb_Uday.Text, tb_Uplay.Text, tb_Udown.Text,
+                                            tb_Uidx.Text, GetCantBoard(), ftb_Des.Text.Replace("'", "''"), Request.QueryString["ID"]);
+                    if (DBFun.ExecuteUpdate(strsql))
+                    {
+                        Response.Write("<script>alert('数据修改成功！');document.reload();</script>");
+                    }
+                    else
+                        Response.Write("<scritp>alert('保存失败！请检查是否填写正确。');</script>");
+
+                }
+                catch
+                {
+                    Response.Write("<script>alert('保存失败！请检查是否填写正确！');</script>");
+
+                }
+            }
+
+        }
+        private string GetCantBoard()
+        {
+            //取得不能进入类型的ID列表
+            string strCant = "";
+            for (int i = 0; i < lb_Cant.Items.Count; i++)
+            {
+                if (i > 0)
+                    strCant += ("," + lb_Cant.Items[i].Value);
+                else
+                    strCant += lb_Cant.Items[i].Value;
+            }
+            return strCant;
+        }
+        private string BeforSave()
+        {
+            //保存前过程
+            string msg = "";
+            if (tb_Utype.Text  == "")
+                msg += "会员类型不能为空！";
+            if (tb_Uday.Text == "")
+                tb_Uday.Text = "0";
+            if (tb_Umoney.Text == "")
+                tb_Umoney.Text = "0";
+            if (tb_Uplay.Text == "")
+                tb_Uplay.Text = "0";
+            if (tb_Udown.Text == "")
+                tb_Udown.Text = "0";
+            if (tb_Uidx.Text == "")
+                tb_Uidx.Text = "0";
+            return msg;
+        }
+    
+    }
+}

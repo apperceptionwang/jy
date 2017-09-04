@@ -1,0 +1,146 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="hy_ClassAddEdit.aspx.cs" Inherits="VOD.Admin.hy_ClassAddEdit" %>
+
+<%@ Register TagPrefix="ftb" Namespace="FreeTextBoxControls" Assembly="FreeTextBox" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<title>hy_edit</title>
+		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" Content="C#">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<style type="text/css">BODY { MARGIN-TOP: 0px; SCROLLBAR-FACE-COLOR: #799ae1; FONT-SIZE: 12px; BACKGROUND: #cad7f7; SCROLLBAR-HIGHLIGHT-COLOR: #799ae1; SCROLLBAR-SHADOW-COLOR: #799ae1; SCROLLBAR-3DLIGHT-COLOR: #799ae1; SCROLLBAR-ARROW-COLOR: #ffffff; SCROLLBAR-TRACK-COLOR: #aabfec; SCROLLBAR-DARKSHADOW-COLOR: #799ae1 }
+	TD { FONT-SIZE: 12px }
+	INPUT { BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px }
+	TEXTAREA { BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px }
+	SELECT { BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px }
+	SPAN { FONT-SIZE: 12px; POSITION: static }
+	A { COLOR: #000000; TEXT-DECORATION: none }
+	A:hover { COLOR: #428eff; TEXT-DECORATION: underline }
+	A.highlight { COLOR: red; TEXT-DECORATION: none }
+	A.highlight:hover { COLOR: red }
+	A.thisclass { FONT-WEIGHT: bold; TEXT-DECORATION: none }
+	A.thisclass:hover { FONT-WEIGHT: bold }
+	A.navlink { COLOR: #000000; TEXT-DECORATION: none }
+	A.navlink:hover { COLOR: #003399; TEXT-DECORATION: none }
+	.twidth { WIDTH: 760px }
+	.content { FONT-SIZE: 14px; MARGIN: 5px 20px; LINE-HEIGHT: 140%; FONT-FAMILY: Tahoma,宋体 }
+	.aTitle { FONT-WEIGHT: bold; FONT-SIZE: 15px }
+	TD.forumHeaderBackgroundAlternate { BACKGROUND-IMAGE: url(images/admin_top_bg.gif); COLOR: #000000; BACKGROUND-COLOR: #799ae1 }
+	#TableTitleLink A:link { COLOR: #ffffff; TEXT-DECORATION: none }
+	#TableTitleLink A:visited { COLOR: #ffffff; TEXT-DECORATION: none }
+	#TableTitleLink A:active { COLOR: #ffffff; TEXT-DECORATION: none }
+	#TableTitleLink A:hover { COLOR: #ffffff; TEXT-DECORATION: underline }
+	TD.forumRow { PADDING-RIGHT: 3px; PADDING-LEFT: 3px; BACKGROUND: #f1f3f5; PADDING-BOTTOM: 3px; PADDING-TOP: 3px }
+	TH { FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(images/admin_bg_1.gif); COLOR: white; BACKGROUND-COLOR: #4455aa }
+	TD.bodytitle { BACKGROUND-IMAGE: url(images/admin_bg_2.gif) }
+	TD.bodytitle1 { BACKGROUND-IMAGE: url(images/admin_bg_3.gif) }
+	TD.tablebody1 { PADDING-RIGHT: 3px; PADDING-LEFT: 3px; BACKGROUND: #bebbdb; PADDING-BOTTOM: 3px; PADDING-TOP: 3px }
+	TD.forumRowHighlight { PADDING-RIGHT: 3px; PADDING-LEFT: 3px; BACKGROUND: #e4edf9; PADDING-BOTTOM: 3px; PADDING-TOP: 3px }
+	.tableBorder { BORDER-RIGHT: #183789 1px solid; BORDER-TOP: #183789 1px solid; BORDER-LEFT: #183789 1px solid; WIDTH: 98%; BORDER-BOTTOM: #183789 1px solid; BACKGROUND-COLOR: #ffffff }
+	.tableBorder1 { WIDTH: 98% }
+	.helplink { FONT: 10px verdana,arial,helvetica,sans-serif; CURSOR: help; TEXT-DECORATION: none }
+	.copyright { PADDING-RIGHT: 1px; BORDER-TOP: #6595d6 1px dashed; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; FONT: 11px verdana,arial,helvetica,sans-serif; COLOR: #4455aa; PADDING-TOP: 1px; TEXT-DECORATION: none }
+	.menuskin { BORDER-RIGHT: #666666 1px solid; BORDER-TOP: #666666 1px solid; BACKGROUND-IMAGE: url(../skins/default/dvmenubg3.gif); VISIBILITY: hidden; FONT: 12px Verdana; BORDER-LEFT: #666666 1px solid; BORDER-BOTTOM: #666666 1px solid; BACKGROUND-REPEAT: repeat-y; POSITION: absolute; BACKGROUND-COLOR: #efefef }
+	.menuskin A { PADDING-RIGHT: 10px; PADDING-LEFT: 25px; BEHAVIOR: url(inc/noline.htc); COLOR: black; TEXT-DECORATION: none }
+	#mouseoverstyle { BORDER-RIGHT: #597db5 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #597db5 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 2px; BORDER-LEFT: #597db5 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #597db5 1px solid; BACKGROUND-COLOR: #c9d5e7 }
+	#mouseoverstyle A { COLOR: black }
+	.menuitems { PADDING-RIGHT: 1px; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; MARGIN: 2px; WORD-BREAK: keep-all; PADDING-TOP: 1px }
+		</style>
+	</HEAD>
+	<body MS_POSITIONING="GridLayout">
+		<form id="Form1" method="post" runat="server">
+			<table width="100%" height="210" border="0" align="center" cellPadding="3" cellSpacing="1"
+				class="tableBorder" id="table2">
+				<tr>
+					<th height="25" colSpan="2" align="left" id="tabletitlelink" style="FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(images/admin_bg_1.gif); COLOR: white; BACKGROUND-COLOR: #4455aa">
+						<asp:Literal id="ltl_PageTitle" runat="server"></asp:Literal></th>
+				</tr>
+				<TR>
+					<TD width="28%" height="4" align="center" class="forumRowHighlight">
+						<P align="left">会员类型：</P>
+					</TD>
+					<TD class="forumRowHighlight" width="72%">
+						<asp:TextBox id="tb_Utype" runat="server"></asp:TextBox></TD>
+				</TR>
+				<TR>
+					<TD width="28%" height="5" class="forumRow">
+						<u>会员类型标识</u>：<br>
+						如果是普通用户,请写0</TD>
+					<TD class="forumRow"><FONT face="宋体">
+							<asp:TextBox id="tb_Uidx" runat="server" Width="56px"></asp:TextBox>0表示普通会员，1为扣点类会员，2为包月类会员，3为终身类会员，20为管理员</FONT></TD>
+				</TR>
+				<TR>
+					<TD height="22" align="center" class="forumRowHighlight">
+						<P align="left">最低费用：</P>
+					</TD>
+					<TD class="forumRowHighlight">
+						<asp:TextBox id="tb_Umoney" runat="server" Width="56px" Enabled="False"></asp:TextBox></TD>
+				</TR>
+				<TR>
+					<TD class="Forumrow" height="22">有效天数：</TD>
+					<TD class="Forumrow">
+						<asp:TextBox id="tb_Uday" runat="server" Width="56px" Enabled="False"></asp:TextBox></TD>
+				</TR>
+				<TR>
+					<TD class="forumRowHighlight" height="10">播放限制(集/日)：</TD>
+					<TD class="forumRowHighlight">
+						<asp:TextBox id="tb_Uplay" runat="server" Width="56px" Enabled="False"></asp:TextBox></TD>
+				</TR>
+				<TR>
+					<TD class="Forumrow" style="height: 27px">下载限制(集/日)：</TD>
+					<TD class="Forumrow" style="height: 27px">
+						<asp:TextBox id="tb_Udown" runat="server" Width="56px" Enabled="False"></asp:TextBox></TD>
+				</TR>
+				<%--<TR>
+					<TD class="forumRowHighlight" height="22">可以进行留言：</TD>
+					<TD class="forumRowHighlight"><FONT face="宋体">
+							<asp:RadioButtonList id="RadioButtonList1" runat="server" Width="104px" RepeatDirection="Horizontal" Enabled="False">
+								<asp:ListItem Value="1" Selected="True">是</asp:ListItem>
+								<asp:ListItem Value="0">否</asp:ListItem>
+							</asp:RadioButtonList></FONT></TD>
+				</TR>--%>
+				<TR>
+					<TD class="Forumrow" height="10"><span class="forumRowHighlight">限制进入电影类型：</span></TD>
+					<TD class="Forumrow">
+						<TABLE id="Table1" cellSpacing="0"  width="100%" cellPadding="0" border="0" style="HEIGHT: 66px">
+							<TR>
+								<TD style="WIDTH: 85px; height: 27px;">可以进入</TD>
+								<TD style="width: 50px; height: 27px"><FONT face="宋体"><BR>
+									</FONT>
+								</TD>								
+								<TD style="width: 85px; height: 27px" >不能进入</TD>
+								<td></td>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 85px"><asp:ListBox ID="lb_Can" runat="server" Width="96px" Height="176px" SelectionMode="Multiple"></asp:ListBox></TD>
+								<TD style="width: 50px"><asp:Button ID="btn_ToCant" runat="server" Text=">>" OnClick="btn_ToCant_Click"></asp:Button>
+									<asp:Button ID="Btn_ToCan" runat="server" Text="<<" OnClick="Btn_ToCan_Click"></asp:Button></TD>
+								<TD style="width: 85px" ><asp:ListBox ID="lb_Cant" runat="server" Width="96px" Height="176px" SelectionMode="Multiple"></asp:ListBox>
+								</td><td>
+								&nbsp;特别提示：设置为不能进入的影片类型，请在类型管理中将其设置为未登录不允许进入。<br />
+								因为未登录用户不属于类何一种会员类型，所以必须注意这点。
+								
+								</TD>
+							</TR>
+						</TABLE>
+					</TD>
+				</TR>
+				<%--<TR>
+					<TD height="5" class="forumRowHighlight">推广一个会员得到金币数：</TD>
+					<TD class="forumRowHighlight">
+						<asp:TextBox id="TextBox7" runat="server" Width="56px" Enabled="False">0</asp:TextBox>金币（只要推荐来的用户注册成为会员都算是推广成功）</TD>
+				</TR>--%>
+				<TR>
+					<TD height="5" class="forumRow">会员类型说明：</TD>
+					<TD class="forumRow"><FONT face="宋体">
+							<FTB:FreeTextBox id="ftb_Des" runat="server" Width="400px" Height="200px" AutoConfigure="Minimal"
+								ButtonPath="images/ftb/officexp/" StartMode="DesignMode"></FTB:FreeTextBox></FONT></TD>
+				</TR>
+				<TR>
+					<TD height="44" colSpan="2" align="center" class="forumRowHighlight"><asp:Button ID="btn_Ok" runat="server" Text="确认修改" Width="68px" OnClick="btn_Ok_Click"></asp:Button></TD>
+				</TR>
+			</table>
+		</form>
+	</body>
+</HTML>

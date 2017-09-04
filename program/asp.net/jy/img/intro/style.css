@@ -1,0 +1,9 @@
+BODY {
+	BACKGROUND-COLOR: #cecece
+}
+.mframe {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 0px; BACKGROUND: #f9edd7; MARGIN-BOTTOM: 5px; PADDING-BOTTOM: 0px; WIDTH: 100%; PADDING-TOP: 0px; TEXT-ALIGN: left
+}
+.mframe_mm {
+	BACKGROUND: url(../Images/main_r3_c3.jpg) repeat-x; MARGIN: 0px
+}

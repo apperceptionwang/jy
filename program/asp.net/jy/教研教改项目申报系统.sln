@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "jy", ".", "{173EF0C6-BAA1-42C5-9AAB-0E43BB7C8B90}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		Debug.AspNetCompiler.VirtualPath = "/教研教改项目申报系统"
+		Debug.AspNetCompiler.PhysicalPath = "..\jy\"
+		Debug.AspNetCompiler.TargetPath = "..\..\..\教研教改项目申报系统\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/教研教改项目申报系统"
+		Release.AspNetCompiler.PhysicalPath = "..\jy\"
+		Release.AspNetCompiler.TargetPath = "..\..\..\教研教改项目申报系统\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "60179"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|.NET = Debug|.NET
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{173EF0C6-BAA1-42C5-9AAB-0E43BB7C8B90}.Debug|.NET.ActiveCfg = Debug|.NET
+		{173EF0C6-BAA1-42C5-9AAB-0E43BB7C8B90}.Debug|.NET.Build.0 = Debug|.NET
+		{173EF0C6-BAA1-42C5-9AAB-0E43BB7C8B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{173EF0C6-BAA1-42C5-9AAB-0E43BB7C8B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

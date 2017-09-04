@@ -1,0 +1,24 @@
+.b12 {
+	FONT-SIZE: 12px
+}
+.b14 {
+	FONT-SIZE: 14px
+}
+.b12-20 {
+	FONT-SIZE: 12px; LINE-HEIGHT: 20px
+}
+.form120 {
+	BORDER-RIGHT: #666666 1px solid; BORDER-TOP: #666666 1px solid; BORDER-LEFT: #666666 1px solid; WIDTH: 120px; BORDER-BOTTOM: #666666 1px solid
+}
+A:link {
+	FONT-SIZE: 12px; COLOR: #333333; TEXT-DECORATION: none
+}
+A:visited {
+	FONT-SIZE: 12px; COLOR: #333333; TEXT-DECORATION: none
+}
+A:hover {
+	FONT-SIZE: 12px; COLOR: #666666; TEXT-DECORATION: underline
+}
+A:active {
+	FONT-SIZE: 12px; TEXT-DECORATION: none
+}

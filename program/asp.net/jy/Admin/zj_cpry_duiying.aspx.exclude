@@ -1,0 +1,103 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="zj_cpry_duiying.aspx.cs" Inherits="Admin_zj_cpry_duiying" %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<title>分配</title>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
+		<meta content="C#" name="CODE_LANGUAGE">
+		<meta content="JavaScript" name="vs_defaultClientScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<LINK href="Admin.css" type="text/css" rel="stylesheet">
+	</HEAD>
+	<body style="font-family: Times New Roman" >
+		<form id="Form1" method="post" runat="server">
+			<div align="center">
+				<table class="tableBorder" id="table2" height="240" cellSpacing="1"
+					cellPadding="3" border="0" runat="server" visible="true" width="500">
+					<tr >
+						<th id="tabletitlelink" style="FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(images/admin_bg_1.gif); COLOR: white; BACKGROUND-COLOR: #4455aa; width: 358px;"
+							align="left" height="25">
+                            专家与参评人员对应关系管理
+                            <asp:Label ID="lbl_leibie" runat="server" Visible="False"></asp:Label></th></tr>
+					<tr>
+						<TD colspan=3 class="forumRowHighlight" vAlign="middle" style="height: 30px">
+                            </TD>
+					</tr>
+					 <tr>
+                        <TD colspan=3 class="forumRowHighlight" style="height: 30px">
+                            <FONT face="宋体"><span style="background-color: #e4edf9">选择专家</span><span
+                                style="background-color: #e4edf9">&nbsp; </span>
+                                <asp:dropdownlist id="ddlist_zj" runat="server" Width="595px" AutoPostBack="True" OnSelectedIndexChanged="ddlist_zj_SelectedIndexChanged">
+                                </asp:DropDownList>
+                            </font>
+                        </td>
+                    </tr>
+					<tr>
+						<td bgColor="#ffffff" valign="top" id="TD1" style="width: 358px; height: 356px;">
+                            <span style="color: #000066">
+                            尚未分配的人员列表<br />
+                            </span>
+                            <asp:GridView ID="gv_wfp" runat="server" AllowPaging="True" AutoGenerateColumns="False"
+                                BorderWidth="0px" CellPadding="3" CellSpacing="1" Width="100%">
+                                <RowStyle BackColor="#F1F3F5" HorizontalAlign="Center" />
+                                <Columns>
+                                    <asp:TemplateField HeaderText="序号">
+                                        <ItemTemplate>
+                                            <asp:Label ID="Label1" runat="server" Text="<%#Container.DataItemIndex+1%>"></asp:Label>
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:BoundField DataField="YourName" HeaderText="姓名" />
+                                    <asp:BoundField DataField="gzdw" HeaderText="工作单位" />
+                                    <asp:BoundField DataField="csgz" HeaderText="从事工作" />
+                                    <asp:TemplateField HeaderText="选择">
+                                        <EditItemTemplate>
+                                            <asp:CheckBox ID="CheckBox1" runat="server" />
+                                        </EditItemTemplate>
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="cbx_select" runat="server" />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <PagerStyle HorizontalAlign="Center" />
+                                <HeaderStyle BackColor="#F1F3F5" Font-Size="13px" />
+                            </asp:GridView>
+                        </td>
+                        <td style="width: 32px; height: 356px;">
+                            <asp:Button ID="btn_add" runat="server" OnClick="btn_add_Click" Text=">>" Width="51px" /><br />
+                                <asp:Button ID="btn_del" runat="server" OnClick="btn_del_Click" Text="<<" Width="51px" /></td><td valign="top" style="width: 358px; height: 356px">
+                                    <span style="color: #000066">已分配的人员列表 </span>
+                                    <asp:GridView ID="gv_yfp" runat="server" AutoGenerateColumns="False"
+                                BorderWidth="0px" CellPadding="3" CellSpacing="1" Width="100%" PageSize="20">
+                                        <RowStyle BackColor="#F1F3F5" HorizontalAlign="Center" />
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="序号">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="Label2" runat="server" Text="<%#Container.DataItemIndex+1%>"></asp:Label>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:BoundField DataField="YourName" HeaderText="姓名" />
+                                            <asp:BoundField DataField="gzdw" HeaderText="工作单位" />
+                                            <asp:BoundField DataField="csgz" HeaderText="从事工作" />
+                                            <asp:TemplateField HeaderText="选择">
+                                                <EditItemTemplate>
+                                                    <asp:CheckBox ID="CheckBox1" runat="server" />
+                                                </EditItemTemplate>
+                                                <ItemTemplate>
+                                                    <asp:CheckBox ID="cbx_select" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <PagerStyle HorizontalAlign="Center" />
+                                        <HeaderStyle BackColor="#F1F3F5" Font-Size="13px" />
+                                    </asp:GridView>
+                        </td>
+					</tr>
+                   
+					
+				</table>
+			</div>
+		</form>
+		
+	</body>
+</HTML>

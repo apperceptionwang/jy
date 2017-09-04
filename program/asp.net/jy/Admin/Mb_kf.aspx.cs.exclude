@@ -1,0 +1,32 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+namespace VOD.Admin
+{
+    public partial class Mb_kf : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                CommFun.IsAdmin();
+                FreeTextBox1.Text = DBFun.SearchValue("Select N_Kf From T_Film_Kf");
+            }
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            string strsql=string.Format("Update T_film_kf Set N_Kf='{0}'",FreeTextBox1.Text);
+            if (DBFun.ExecuteUpdate(strsql))
+            {
+                Response.Write("<script>alert('保存成功！');</script>");
+            }
+        }
+}
+}

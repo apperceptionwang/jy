@@ -1,0 +1,57 @@
+﻿/* 
+ * WebTextPane.css @Microsoft Visual Studio.NET 2003 <CSS 2>
+ * AfritXia
+ * 07.29/2006
+ * 
+ * 控件样式表
+ * 
+ */
+
+.WebTextPane
+{
+}
+
+.WebTextPane table
+{
+}
+
+.WebTextPane table tr
+{
+}
+
+.WebTextPane table tr td
+{
+	padding: 1px;
+}
+
+/* 下拉列表框命令控件 */
+.WebTextPane table tr td select.CToolbarDropDownList
+{
+	font: normal normal normal 12px "Tahoma";
+}
+
+/* 图片按钮命令控件 */
+.WebTextPane table tr td image.CToolbarImageButton
+{
+	border: solid 1px #ffffff;
+}
+
+.WebTextPane table tr td image.CToolbarImageButton_OnMouseEntry
+{
+	border: outset 1px;
+}
+
+.WebTextPane table tr td image.CToolbarImageButton_OnMouseExit
+{
+	border: solid 1px #ffffff;
+}
+
+.WebTextPane table tr td image.CToolbarImageButton_OnMouseDown
+{
+	border: solid 1px #d0d0d0;
+}
+
+.WebTextPane table tr td image.CToolbarImageButton_OnMouseUp
+{
+	border: outset 1px;
+}

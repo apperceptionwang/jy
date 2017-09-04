@@ -1,0 +1,109 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+namespace VOD.Admin
+{
+    public partial class zhuanti : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            CommFun.IsAdmin();
+
+            if(!IsPostBack)
+            {
+               
+                string strqry = "select * From T_zhuanti order by id desc";
+                DataView dv = DBFun.GetDataView(strqry);
+                Cache.Insert("dvlist", (DataView)dv, null, System.Web.Caching.Cache.NoAbsoluteExpiration, new TimeSpan(0, 5, 0));
+                AspNetPager1.RecordCount = dv.Table.Rows.Count;  
+                bindData();                  
+              
+                if (Request.QueryString["Action"] == "edit")
+                {
+                    DataRow drw = DBFun.GetDataRow("select * From T_zhuanti where id=" + Request.QueryString["id"]);
+                    if (drw != null)
+                    {
+                        tb_Name.Text = drw["N_name"].ToString();
+                        tb_Pic.Text = drw["N_Logo"].ToString();
+                        tb_Url.Text = drw["N_Url"].ToString();
+                        tb_Intro.Text = drw["N_Intro"].ToString();
+                        btn_Ok.Text = "修改专题";
+                        lbl_title.Text = "修改专题";
+
+                    }
+                }
+                if (Request.QueryString["Action"] == "delete")
+                {
+                    DBFun.ExecuteSql("Delete From T_zhuanti where id=" + Request.QueryString["id"]);
+                    Response.Redirect(Request.UrlReferrer.ToString());
+                }
+            } 
+           
+
+
+        }
+        protected void btn_Ok_Click(object sender, EventArgs e)
+        {
+           
+            string strsql = "";
+            if (btn_Ok.Text == "添加专题")
+            {
+                strsql = string.Format("Insert into T_zhuanti (N_name,N_Url,N_logo,N_Intro) values('{0}','{1}','{2}','{3}')",
+                    tb_Name.Text, tb_Url.Text, tb_Pic.Text, tb_Intro.Text.Replace("'", "''"));
+            }
+            else
+            {
+                strsql = string.Format("Update T_zhuanti Set N_name='{0}',N_Url='{1}',N_Logo='{2}',N_intro='{3}' where id={4}",
+                    tb_Name.Text, tb_Url.Text, tb_Pic.Text, tb_Intro.Text.Replace("'", "''"), Request.QueryString["id"]);
+            }
+            if (DBFun.ExecuteUpdate(strsql))
+            {
+                Response.Write("<script>alert('数据保存成功！');</script>");
+                string strqry = "select * From T_zhuanti order by id desc";
+                DataView dv = DBFun.GetDataView(strqry);
+                Cache["dvlist"] = (DataView)dv;
+                bindData();
+            }
+            else
+            {
+                Response.Write("<script>alert('数据保存失败！');</script>");
+            }
+        }
+        protected void AspNetPager1_PageChanged(object sender, EventArgs e)
+        {
+            bindData();
+        }
+        private void checkCache()
+        {
+            //检查缓存是否存在
+            if (Cache["dvlist"] == null)
+            {
+                
+                //绑定数据,显示用户
+                DataView dvlist;
+                dvlist = DBFun.GetDataView("select * From T_zhuanti order by id desc");
+                AspNetPager1.RecordCount = dvlist.Table.Rows.Count;
+                Cache.Insert("dvlist", (DataView)dvlist, null, System.Web.Caching.Cache.NoAbsoluteExpiration, new TimeSpan(0, 5, 0));
+            }
+        }
+        void bindData()
+        {
+            checkCache();
+            PagedDataSource pds = new PagedDataSource();
+            pds.AllowPaging = true;
+            pds.PageSize = AspNetPager1.PageSize;
+            pds.CurrentPageIndex = AspNetPager1.CurrentPageIndex - 1;
+            DataView dv = (DataView)Cache["dvlist"];            
+            pds.DataSource = dv;
+            Repeater1.DataSource = pds;
+            Repeater1.DataBind();
+        }
+    }
+}

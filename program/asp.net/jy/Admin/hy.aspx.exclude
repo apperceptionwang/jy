@@ -1,0 +1,122 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="hy.aspx.cs" Inherits="VOD.Admin.hy" %>
+<%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<title>hy</title>
+		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" Content="C#">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<style type="text/css">BODY { MARGIN-TOP: 0px; SCROLLBAR-FACE-COLOR: #799ae1; FONT-SIZE: 12px; BACKGROUND: #cad7f7; SCROLLBAR-HIGHLIGHT-COLOR: #799ae1; SCROLLBAR-SHADOW-COLOR: #799ae1; SCROLLBAR-3DLIGHT-COLOR: #799ae1; SCROLLBAR-ARROW-COLOR: #ffffff; SCROLLBAR-TRACK-COLOR: #aabfec; SCROLLBAR-DARKSHADOW-COLOR: #799ae1 }
+	TD { FONT-SIZE: 12px }
+	INPUT { BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px }
+	TEXTAREA { BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px }
+	SELECT { BORDER-TOP-WIDTH: 1px; BORDER-LEFT-WIDTH: 1px; FONT-SIZE: 12px; BORDER-BOTTOM-WIDTH: 1px; BORDER-RIGHT-WIDTH: 1px }
+	SPAN { FONT-SIZE: 12px; POSITION: static }
+	A { COLOR: #000000; TEXT-DECORATION: none }
+	A:hover { COLOR: #428eff; TEXT-DECORATION: underline }
+	A.highlight { COLOR: red; TEXT-DECORATION: none }
+	A.highlight:hover { COLOR: red }
+	A.thisclass { FONT-WEIGHT: bold; TEXT-DECORATION: none }
+	A.thisclass:hover { FONT-WEIGHT: bold }
+	A.navlink { COLOR: #000000; TEXT-DECORATION: none }
+	A.navlink:hover { COLOR: #003399; TEXT-DECORATION: none }
+	.twidth { WIDTH: 760px }
+	.content { FONT-SIZE: 14px; MARGIN: 5px 20px; LINE-HEIGHT: 140%; FONT-FAMILY: Tahoma,宋体 }
+	.aTitle { FONT-WEIGHT: bold; FONT-SIZE: 15px }
+	TD.forumHeaderBackgroundAlternate { BACKGROUND-IMAGE: url(images/admin_top_bg.gif); COLOR: #000000; BACKGROUND-COLOR: #799ae1 }
+	#TableTitleLink A:link { COLOR: #ffffff; TEXT-DECORATION: none }
+	#TableTitleLink A:visited { COLOR: #ffffff; TEXT-DECORATION: none }
+	#TableTitleLink A:active { COLOR: #ffffff; TEXT-DECORATION: none }
+	#TableTitleLink A:hover { COLOR: #ffffff; TEXT-DECORATION: underline }
+	TD.forumRow { PADDING-RIGHT: 3px; PADDING-LEFT: 3px; BACKGROUND: #f1f3f5; PADDING-BOTTOM: 3px; PADDING-TOP: 3px }
+	TH.head { FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(images/admin_bg_1.gif); COLOR: white; BACKGROUND-COLOR: #4455aa }
+	TD.bodytitle { BACKGROUND-IMAGE: url(images/admin_bg_2.gif) }
+	TD.bodytitle1 { BACKGROUND-IMAGE: url(images/admin_bg_3.gif) }
+	TD.tablebody1 { PADDING-RIGHT: 3px; PADDING-LEFT: 3px; BACKGROUND: #bebbdb; PADDING-BOTTOM: 3px; PADDING-TOP: 3px }
+	TD.forumRowHighlight { PADDING-RIGHT: 3px; PADDING-LEFT: 3px; BACKGROUND: #e4edf9; PADDING-BOTTOM: 3px; PADDING-TOP: 3px }
+	.tableBorder { BORDER-RIGHT: #183789 1px solid; BORDER-TOP: #183789 1px solid; BORDER-LEFT: #183789 1px solid; WIDTH: 98%; BORDER-BOTTOM: #183789 1px solid; BACKGROUND-COLOR: #ffffff }
+	.tableBorder1 { WIDTH: 98% }
+	.helplink { FONT: 10px verdana,arial,helvetica,sans-serif; CURSOR: help; TEXT-DECORATION: none }
+	.copyright { PADDING-RIGHT: 1px; BORDER-TOP: #6595d6 1px dashed; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; FONT: 11px verdana,arial,helvetica,sans-serif; COLOR: #4455aa; PADDING-TOP: 1px; TEXT-DECORATION: none }
+	.menuskin { BORDER-RIGHT: #666666 1px solid; BORDER-TOP: #666666 1px solid; BACKGROUND-IMAGE: url(../skins/default/dvmenubg3.gif); VISIBILITY: hidden; FONT: 12px Verdana; BORDER-LEFT: #666666 1px solid; BORDER-BOTTOM: #666666 1px solid; BACKGROUND-REPEAT: repeat-y; POSITION: absolute; BACKGROUND-COLOR: #efefef }
+	.menuskin A { PADDING-RIGHT: 10px; PADDING-LEFT: 25px; BEHAVIOR: url(inc/noline.htc); COLOR: black; TEXT-DECORATION: none }
+	#mouseoverstyle { BORDER-RIGHT: #597db5 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #597db5 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 2px; BORDER-LEFT: #597db5 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #597db5 1px solid; BACKGROUND-COLOR: #c9d5e7 }
+	#mouseoverstyle A { COLOR: black }
+	.menuitems { PADDING-RIGHT: 1px; PADDING-LEFT: 1px; PADDING-BOTTOM: 1px; MARGIN: 2px; WORD-BREAK: keep-all; PADDING-TOP: 1px }
+		</style>
+	</HEAD>
+	<body>
+		<form id="Form1" method="post" runat="server">
+			<FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体">
+			</FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体">
+			</FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体">
+			</FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体">
+			</FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT>
+			<br>
+			<div align="center">
+				<table class="tableBorder" id="table2" height="14" cellSpacing="1" cellPadding="3" border="0">
+					<tr>
+						<th id="tabletitlelink" style="FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(images/admin_bg_1.gif); COLOR: white; BACKGROUND-COLOR: #4455aa"
+							align="left" height="25">
+							会员管理</th></tr>
+					<tr>
+						<TD class="forumRowHighlight" vAlign="middle" width="50%" height="35">
+							<p align="center">会员查询:会员ID:
+								<asp:textbox id="tb_Search" runat="server" Width="105px"></asp:textbox>&nbsp; 
+								会员类型:
+								<asp:dropdownlist id="dw_Uclass" runat="server"></asp:dropdownlist>&nbsp;
+								<asp:button id="btn_Search" runat="server" Width="51px" Text="查询" OnClick="btn_Search_Click"></asp:button></p>
+						</TD>
+					</tr>
+					<TR>
+						<TD class="Forumrow" align="center" width="100%" style="height: 25px">
+                            <asp:GridView ID="GridView1" runat="server" CellPadding="4" Width="100%" AutoGenerateColumns="False" BackColor="#CCCCCC" BorderColor="#E7E7E7" BorderStyle="Solid" BorderWidth="1px" ForeColor="Black">
+                                <Columns>
+                                    <asp:BoundField DataField="id" HeaderText="ID"  />
+                                    <asp:BoundField DataField="username" HeaderText="用户ID" />
+                                    <asp:BoundField DataField="Rtime" DataFormatString="{0:yyyy年MM月dd日}" HeaderText="注册时间" HtmlEncode="False" />
+                                    <asp:BoundField DataField="Llasttime" DataFormatString="{0:yyyy年MM月dd日}" HeaderText="到期时间" HtmlEncode="False" />
+                                    <asp:TemplateField HeaderText="会员类型">
+                                        <ItemTemplate>
+                                            <%# GetUT(Eval("Ttype").ToString()) %>
+                                        </ItemTemplate>
+                                        
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="剩余天数">
+                                    <ItemTemplate>
+                                    <%#GetDay(Eval("Llasttime").ToString(),Eval("Ttype").ToString(),Eval("point").ToString()) %>
+                                    </ItemTemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="操作">
+                                    <ItemTemplate>
+                                    <a href='hy_edit.aspx?id=<%#Eval("id") %>'>编辑</a><asp:CheckBox  ID="ckb_Sel" runat="server" Text ="选择" />
+                                    </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                                <RowStyle HorizontalAlign="Center" BackColor="White" />
+                                <HeaderStyle BackColor="#EFEFEF" Font-Size="13px" />
+                            </asp:GridView>
+                            &nbsp;</TD>
+					</TR>
+					<tr>
+						<td class="Forumrow" align="center" width="100%" height="25"><asp:panel id="Panel1" runat="server">
+								<TABLE height="30" cellSpacing="1" cellPadding="0" align="center" bgColor="#e7e7e7" border="0">
+									<TR bgColor="#f7f7f7">
+										<TD style="WIDTH: 588px; " align="center" width="588"><webdiyer:aspnetpager id="AspNetPager1" runat="server" horizontalalign="Center" onpagechanged="AspNetPager1_PageChanged"
+        showcustominfosection="Left" width="80%" meta:resourceKey="AspNetPager1" style="font-size:14px" InputBoxStyle="width:19px"
+        CustomInfoHTML="一共有<b><font color='red'>%RecordCount%</font></b>条记录 当前页<font color='red'><b>%CurrentPageIndex%/%PageCount%</b></font> " AlwaysShow="True" FirstPageText="首页" LastPageText="尾页" NextPageText="下一页"
+         PageSize="14" PrevPageText="上一页" NumericButtonCount="5"></webdiyer:aspnetpager><FONT color="red"></FONT></TD>
+										<TD align="right" width="500" >
+											<asp:Button id="btn_Delete" runat="server" Text="批量删除"  OnClientClick="return confirm('确定要删除吗？');" OnClick="btn_Delete_Click"></asp:Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+											</TD>
+									</TR>
+								</TABLE>
+							</asp:panel></td>
+					</tr>
+				</table>
+			</div>
+		</form>
+	</body>
+</HTML>

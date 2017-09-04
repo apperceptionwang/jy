@@ -1,0 +1,27 @@
+TD {
+	LINE-HEIGHT: 14pt; FONT-SIZE: 9pt
+}
+INPUT {
+	LINE-HEIGHT: 14pt; FONT-SIZE: 9pt
+}
+SELECT {
+	LINE-HEIGHT: 14pt; FONT-SIZE: 9pt
+}
+TEXTAREA {
+	LINE-HEIGHT: 14pt; FONT-SIZE: 9pt
+}
+A:link {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: blue; TEXT-DECORATION: underline
+}
+A:active {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+.text1 {
+	MARGIN: 10px
+}

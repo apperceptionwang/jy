@@ -1,0 +1,56 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="hy_class.aspx.cs" Inherits="VOD.Admin.hy_class" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+		<title>hy_class</title>
+		<meta name="GENERATOR" Content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" Content="C#">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+<LINK href="Admin.css" type="text/css" rel="stylesheet">
+	</HEAD>
+	<body >
+		<form id="Form1" method="post" runat="server">
+			<FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体">
+			</FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT><FONT face="宋体"></FONT>
+			<br>
+			<div align="center">
+				<table class="tableBorder" id="table2" height="105" cellSpacing="1" cellPadding="3" border="0">
+					<tr>
+						<th id="tabletitlelink" style="FONT-WEIGHT: bold; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(images/admin_bg_1.gif); COLOR: white; BACKGROUND-COLOR: #4455aa"
+							align="left" height="12">
+							会员类型管理</th>
+					</tr>
+					<tr>
+						<td style="height: 12px">
+
+                            <asp:GridView ID="GridView1"  Width="100%" 
+                            AutoGenerateColumns="False" runat="server" BorderStyle="None" BorderWidth="0px" CellPadding="3" CellSpacing="1">
+                                <RowStyle HorizontalAlign="Center" BackColor="#F1F3F5" />
+                                <HeaderStyle BackColor="#F1F3F5" Font-Size="12px" />
+                                <AlternatingRowStyle BorderColor="White" />
+                                <Columns>
+                                    <asp:BoundField DataField="id" HeaderText="ID" />
+                                    <asp:BoundField DataField="Utype" HeaderText="会员类型" />
+                                    <asp:BoundField DataField="Umoney" HeaderText="会员费用" />
+                                    <asp:BoundField DataField="Uday" HeaderText="有效天数" />
+                                    <asp:BoundField DataField="Uplay" HeaderText="播放限制(集/日)" />
+                                    <asp:BoundField DataField="Udown" HeaderText="下载限制(集/日)" />
+                                    <asp:TemplateField HeaderText="操作">
+                                    <ItemTemplate>
+                                    <a href='hy_classAddEdit.aspx?Action=Edit&ID=<%#DataBinder.Eval(Container.DataItem,"ID")%>' >
+												编辑</a> <a  onclick="return confirm('确认要删除吗？');" href='hy_classAddEdit.aspx?Action=Delete&ID=<%#DataBinder.Eval(Container.DataItem,"id")%>'>
+												<font color="#ff0000">删除</font></a>
+                                    </ItemTemplate></asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
+						</td>
+					</tr>
+					<tr><td>
+                        如非必要，千万不要删除本表数据，以确保记录ID的连续性，例如：id为1到8，中间不能少一个数字，且必须是1开头。当然，您也可以按此规则重建该表。</td></tr>
+				</table>
+			</div>
+		</form>
+	</body>
+</HTML>
+

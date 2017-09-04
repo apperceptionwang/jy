@@ -1,0 +1,110 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+namespace VOD.Admin
+{
+    public partial class hy_edit : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                CommFun.IsAdmin();
+                
+                //绑定用户类型                
+                DataView dvUclass = DBFun.GetDataView("select * from T_Uclass");
+                dw_Uclass.DataSource = dvUclass;
+                dw_Uclass.DataTextField = "Utype";
+                dw_Uclass.DataValueField = "id";
+                dw_Uclass.DataBind();
+                //显示用户资料
+                string id = Request.QueryString["id"];
+                if (id == null || id == "")
+                {
+                    Response.Write("<script>alert('参数非法！');history.go(-1);</script>");
+                    return;
+                }
+                else
+                {
+                    string strqry = string.Format("select * From T_Users where id={0}", id);
+                    DataRow dr = DBFun.GetDataRow(strqry);
+                    if (dr != null)
+                    {
+                        lbl_Username.Text = dr["username"].ToString();
+                        dw_Uclass.Text = dr["Ttype"].ToString();
+                        tb_LlastTime.Text = dr["Llasttime"].ToString();
+                        tb_Question.Text = dr["question"].ToString();
+                        tb_Anwser.Text = dr["answer"].ToString();
+                        tb_Point.Text = dr["point"].ToString();
+                        tb_Money.Text = dr["uMoney"].ToString();
+                        lbl_Rtime.Text = dr["Rtime"].ToString();
+                        lbl_LloginTime.Text = dr["LloginTime"].ToString();
+                        Lbl_LNum.Text = dr["Lnum"].ToString();
+                        lbl_LloginIP.Text = dr["LloginIP"].ToString();
+                        tb_Linker.Text = dr["linker"].ToString();
+                        tb_Tele.Text = dr["tele"].ToString();
+                        tb_Email.Text = dr["Email"].ToString();
+                    }
+                }
+
+
+            }
+        }
+        protected void btn_Ok_Click(object sender, EventArgs e)
+        {
+            //确定
+            BeforeSave();
+            string strsql = "";
+            string id = Request.QueryString["id"].ToString();
+            if (tb_UserPwd.Text == "")
+            {
+                strsql = string.Format("Update [T_Users] set Ttype = {0},llasttime =#{1}#,question='{2}',answer='{3}'"
+                            + " ,point={4},umoney={5},Linker='{6}',tele='{7}',email='{8}' where id={9}",
+                            dw_Uclass.Text, tb_LlastTime.Text, tb_Question.Text, tb_Anwser.Text,
+                            tb_Point.Text, tb_Money.Text, tb_Linker.Text, tb_Tele.Text, tb_Email.Text, id);
+            }
+            else
+            {
+                strsql = string.Format("Update T_Users Set Ttype={0},Llasttime=#{1}#,question='{2}',answer='{3}',"
+                            + "point={4},umoney={5},Linker='{6}',tele='{7}',email='{8}',UserPwd='{9}' where id={10}",
+                            dw_Uclass.Text,tb_LlastTime.Text, tb_Question.Text, tb_Anwser.Text,
+                            tb_Point.Text, tb_Money.Text, tb_Linker.Text, tb_Tele.Text, tb_Email.Text,
+                            System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(tb_UserPwd.Text,"MD5"), id);
+            }
+            try
+            {                
+                if (DBFun.ExecuteUpdate(strsql))
+                {
+                    Response.Write("<script>alert('保存成功！');</script>");
+                }
+                else
+                {
+                    Response.Write("<script>alert('保存失败！请检查输入数据是否正确。');history.go(-1);</script>");
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write(@"<script>alert('保存失败！"+ ex.Message   +"。');</script>");
+            }
+        }
+        private void BeforeSave()
+        {
+            //保存前
+            
+            if (tb_LlastTime.Text == "")
+                tb_LlastTime.Text = System.DateTime.Now.ToString();
+            if (tb_Point.Text == "")
+                tb_Point.Text = "0";
+            if (tb_Money.Text == "")
+                tb_Money.Text = "0";
+
+        }
+}
+}

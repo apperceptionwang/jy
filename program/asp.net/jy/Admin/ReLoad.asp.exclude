@@ -1,0 +1,447 @@
+<!-- #include file="../Conn.asp" -->
+<!-- #include file="inc.asp" -->
+<%
+'====================================================================
+'=              Copyright (c) 2004,NB联盟 E.P.K开发小组             =
+'=                      All rights reserved.                        =
+'=------------------------------------------------------------------=
+'=                     文件名称：ReLoad.asp                         =
+'=                     摘    要：后台—数据更新文件                 =
+'=------------------------------------------------------------------=
+'=                     最后更新：eason007                           =
+'=                     最后日期：2004-11-13                         =
+'====================================================================
+
+Dim Atcion,PostId
+Dim TopicList
+Atcion=Request.QueryString("atcion")
+PostId=Request.QueryString("postid")
+Admin_Nav
+
+'If Instr(1,Session("Master_Power"),"01,")<=0 Then 
+	'ErrMsg="对不起，你没有访问该页面的权限"
+	'Call Error(1)
+'End If
+
+Select Case Atcion
+Case "reload"
+	Call ReLoadCache
+Case "update"
+	Call UpDate(PostId)
+Case "updatesys"
+	Call ReLoadSystem
+Case "markjs"
+	Call MarkJs
+Case Else
+	Call Main
+End Select
+
+Sub Main
+%>
+<table width="95%" cellpadding="0" cellspacing="0" align="center" class=TableBorder>
+	<tr height=22>
+		<th>系统数据更新</th>
+	</tr>
+	<tr>
+		<td class=forumRowHighlight>&nbsp;<B>注意</B>：下列这些操作可能会非常消耗服务器资源，请慎重使用</td>
+	</tr>
+	<form action="?atcion=reload" method=post id=form1 name=form1>
+    <tr height=22>
+		<td>&nbsp;&nbsp;更新系统缓存&nbsp;&nbsp;<input type="submit" name="Submit" value="开始"></td>
+	</tr>
+	</form>
+	<form action="?atcion=update" method=post id=form2 name=form2>
+    <tr height=22>
+		<td>&nbsp;&nbsp;更新栏目统计数据&nbsp;&nbsp;<input type="submit" name="Submit" value="开始"></td>
+	</tr>
+	</form>
+	<form action="?atcion=updatesys" method=post id=form3 name=form3>
+    <tr height=22>
+		<td>&nbsp;&nbsp;更新系统统计数据&nbsp;&nbsp;<input type="submit" name="Submit" value="开始"></td>
+	</tr>
+	</form>
+	<form action="?atcion=markjs" method=post id=form4 name=form4>
+    <tr height=22>
+		<td>&nbsp;&nbsp;生成系统JS&nbsp;&nbsp;<input type="submit" name="Submit" value="开始">&nbsp;该功能将需要使用服务器FSO组件，请确认是否支持。</td>
+	</tr>
+	</form>
+</table>
+<%
+End Sub
+
+Sub ReLoadCache
+	DelCahe
+	SetupSystemDate
+
+	Response.Write "重建系统缓存成功"
+End Sub
+
+Sub ReLoadSystem
+	Dim ColumnTotal,UserTotal,ContentTotal,MangerTopicTotal,ReviewTotal
+	ColumnTotal=0
+	UserTotal=0
+	ContentTotal=0
+	SQL="select count(id) from [NB_Column]"
+	ColumnTotal=conn.execute(sql)(0)
+	SQL="select count(id) from [NB_User]"
+	UserTotal=conn.execute(sql)(0)
+	SQL="select count(id) from [NB_Content] where ispass=-1 and isdel=0"
+	ContentTotal=conn.execute(sql)(0)
+	SQL="select count(id) from [NB_Content] where ispass=0 and isdel=0"
+	MangerTopicTotal=conn.execute(sql)(0)
+	SQL="select count(id) from [NB_Review] where ispass=-1"
+	ReviewTotal=conn.execute(sql)(0)
+
+	SQL="update [NB_System] set reguser="&UserTotal&",TopicNum="&ContentTotal&",ColumnNum="&ColumnTotal&",MangerTopicNum="&MangerTopicTotal&",ReviewNum="&ReviewTotal
+	conn.execute(sql)
+
+	Dim i,j
+	Dim Count,Tmp
+	Count=0
+	Sql="select id,groupName from [nb_usergroup]"
+	Set rs=conn.execute(sql)
+	If Not rs.eof And Not rs.bof Then
+		TopicList=rs.getrows()
+		Count=Ubound(TopicList,2)+1
+	%>
+	<table cellpadding="0" width="420" cellspacing="0" border="0" class="tableBorder">
+		<tr>
+			<th height="22">下面开始更新用户组统计资料，预计本次共有<%=Count%>个用户组需要更新</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="400" border="0" cellspacing="1" cellpadding="1" bgcolor=000000 align=center>
+					<tr>
+						<td bgcolor=ffffff height=9><img src="images/bar4.gif" width=0 height=16 id=img2 name=img2 align=absmiddle></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td height="22">&nbsp;<span id=txt2 name=txt2 style="font-size:9pt">0</span><span style="font-size:9pt">%</span></td>
+		</tr>		
+	</table>
+	<%
+		For i=0 To Ubound(TopicList,2)
+			SQL="select iif(count(id)=null,0,count(id)) from NB_User where user_group="&TopicList(0,i)
+			Tmp=conn.execute(sql)(0)
+			Sql="update nb_usergroup set usertotal="&Tmp&" where id="&TopicList(0,i)
+			conn.execute(sql)
+			j=j+1
+			Response.Write "<script>img2.width=" & Fix((j/Count) * 400) & ";" & VbCrLf
+			Response.Write "txt2.innerHTML=""更新完『 "&TopicList(1,i)&"』的数据，正在更新下一个数据，" & FormatNumber(j/Count*100,4,-1) & """;</script>" & VbCrLf
+			Response.Flush
+		Next
+		Response.Write "<script>img2.width=400;txt2.innerHTML=""100"";"& VbCrLf
+		Response.Write "txt2.innerHTML=""<B>用户组数据更新完成。</B>100"";</script>"& VbCrLf
+	End If
+	rs.close
+	Set rs=Nothing
+End Sub
+
+Function UpDate(ColumnId)
+	Dim Count
+	If ColumnId<>"" And IsNumeric(ColumnId) And ColumnId<>"0" Then 	
+		'SQL="select iif(count(id)=null,0,count(id)) from NB_Content where columnid="&ColumnId&" and isdel=0"
+		sql = "select count(id) from NB_Content where columnid = "&ColumnID&" and isdel=0"
+		'Response.write(sql)
+		'Response.end()
+		Set rs = Conn.Execute(sql)
+		if not rs.eof then
+			Count = rs(0)
+		else
+			Count = 0
+		end if
+		rs.close
+		'Count=conn.execute(sql)(0)
+		Sql="update nb_column set countnum="&Count&" where id="&ColumnId
+		Conn.Execute(sql)
+		ErrMsg="一个栏目更新完成"
+		Call Error(0)
+	Else
+		Dim i,j
+		Dim Tmp,Temp
+		
+		SQL="update [NB_Content] left join [NB_Column] c on [NB_Content].columnid=c.id set [NB_Content].columncode=c.code,[NB_Content].ColumnName=c.Title"
+		Conn.Execute(SQL)
+
+		Sql="select id,title from [nb_column]"
+		Set rs=conn.execute(sql)
+		If Not rs.eof And Not rs.bof Then
+			TopicList=rs.getrows()
+			Count=Ubound(TopicList,2)+1
+		%>
+		<table width="420" cellpadding="0" cellspacing="0" border="0" class="tableBorder">
+			<tr>
+				<th height="22">下面开始更新文件夹统计资料，预计本次共有<%=Count%>个文件夹需要更新</th>
+			</tr>
+			<tr>
+				<td>
+					<table width="400" border="0" cellspacing="1" cellpadding="1" align=center bgcolor=000000>
+						<tr>
+							<td bgcolor=ffffff height=9><img src="images/bar4.gif" width=0 height=16 id=img2 name=img2 align=absmiddle></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td height="22">&nbsp;<span id=txt2 name=txt2 style="font-size:9pt">0</span><span style="font-size:9pt">%</span></td>
+			</tr>
+		</table>
+		<%
+			Response.Flush 
+			For i=0 To Ubound(TopicList,2)
+				SQL="select iif(count(id)=null,0,count(id)) from NB_Content where columnid="&TopicList(0,i)&" and isdel=0 and ispass=-1"
+				Tmp=conn.execute(sql)(0)
+				SQL="select iif(count(id)=null,0,count(id)) from NB_Content where columnid="&TopicList(0,i)&" and isdel=0 and ispass=0"
+				Temp=conn.execute(sql)(0)
+				Sql="update nb_column set countnum="&Tmp&",mangernum="&Temp&" where id="&TopicList(0,i)
+				conn.execute(sql)
+				j=j+1
+				Response.Write "<script>img2.width=" & Fix((j/Count) * 400) & ";" & VbCrLf
+				Response.Write "txt2.innerHTML=""更新完『 "&TopicList(1,i)&"』的数据，正在更新下一个数据，" & FormatNumber(j/Count*100,4,-1) & """;</script>" & VbCrLf
+				Response.Flush
+			Next
+			Response.Write "<script>img2.width=400;txt2.innerHTML=""100"";"& VbCrLf
+			Response.Write "txt2.innerHTML=""<B>文件夹数据更新完成。</B>100"";</script>"& VbCrLf
+		End If
+		rs.close
+		Set rs=Nothing
+	End If
+End Function
+
+Function SetupSystemDate
+'环境变量配置函数
+	Dim Temp
+	Sql="select info from [nb_system]"
+	Set Rs=conn.execute(sql)
+	If Not rs.eof And Not rs.bof Then 
+		Temp=split(rs(0),",")
+		Application.Lock 
+		Application(sCacheName&"SystemData")=Temp
+		Application.UnLock 
+	End If
+End Function
+
+Sub DelCahe()
+	Application.Lock
+	Application.Contents.Remove(sCacheName&"SystemData")
+	Application.Contents.Remove(sCacheName&"ColumnData")
+	Application.Contents.Remove(sCacheName&"Vote")
+	Application.unLock
+End Sub
+
+Function MarkJs
+	If Not ChkPost Then 
+		ErrMsg="对不起，请不要从外部提交数据！"
+		Call Error(1)
+	End If
+	
+	If IsObjInstalled("Scripting.FileSystemObject") Then
+		'On Error Resume Next
+		Dim i,j,k,List,Level
+		Dim fso,f1,file
+		Dim OutStr,OutStr_Clone
+		Dim SiteInfo
+		
+		SiteInfo=GetSiteSetting()
+		If Right(SiteInfo(11),1)<>"/" Then SiteInfo(11)=SiteInfo(11)&"/"
+		
+		Set fso = CreateObject("Scripting.FileSystemObject")
+		file=Server.MapPath("../js/mune.js")
+		Set f1 = fso.CreateTextFile(file, True)
+		OutStr_Clone="mmenubg='';mmenucolor='#3575CC';mfontcolor='#FFFFFF';mmenuoutcolor='#1D5298';mmenuincolor='#A3B2CC';mmenuoutbordercolor='#EFEFEF';mmenuinbordercolor='#CDCDCD';mmidoutcolor='#CCCCFE';mmidincolor='#CCCCFE';mmenuovercolor='#FFFFFF';mitemedge='0';msubedge='1';mmenuunitwidth=66;mmenuitemwidth=120;mmenuheight=20;mmenuwidth='100%';mmenuadjust=0;mmenuadjustV=0;mfonts='font-family: 宋体; font-size: 9pt; color: #FFFFFF; ';mcursor='hand';"
+		OutStr_Clone=OutStr_Clone&Chr(10)
+		
+		OutStr="mpmenu1=new mMenu('首页','"&SiteInfo(11)&"default.Htm','self','','','','');"
+		OutStr=OutStr&Chr(10)
+		OutStr=OutStr&"mpmenu1.addItem(new mMenuItem('<img src="&SiteInfo(11)&"images/ye.gif> 图片文章','"&SiteInfo(11)&"Img_List.asp','self',false,'图片文章',null,'','','',''));"
+		OutStr=OutStr&Chr(10)
+		OutStr=OutStr&"mpmenu1.addItem(new mMenuItem('<img src="&SiteInfo(11)&"images/ye.gif> 过往专题','"&SiteInfo(11)&"Diss_List.asp','self',false,'过往专题',null,'','','',''));"
+		OutStr=OutStr&Chr(10)
+		OutStr=OutStr&"mpmenu1.addItem(new mMenuItem('<img src="&SiteInfo(11)&"images/ye.gif> 会员列表','"&SiteInfo(11)&"Member_List.asp','self',false,'会员列表',null,'','','',''));"
+		OutStr=OutStr&Chr(10)
+
+		OutStr_Clone=OutStr_Clone&"mpmenu1=new mMenu('首页','./','self','','','','');"
+		OutStr_Clone=OutStr_Clone&Chr(10)
+		OutStr_Clone=OutStr_Clone&"mpmenu1.addItem(new mMenuItem('<img src=images/ye.gif> 图片文章','Img_List.asp','self',false,'图片文章',null,'','','',''));"
+		OutStr_Clone=OutStr_Clone&Chr(10)
+		OutStr_Clone=OutStr_Clone&"mpmenu1.addItem(new mMenuItem('<img src=images/ye.gif> 过往专题','Diss_List.asp','self',false,'过往专题',null,'','','',''));"
+		OutStr_Clone=OutStr_Clone&Chr(10)
+		OutStr_Clone=OutStr_Clone&"mpmenu1.addItem(new mMenuItem('<img src=images/ye.gif> 会员列表','Member_List.asp','self',false,'会员列表',null,'','','',''));"
+		OutStr_Clone=OutStr_Clone&Chr(10)
+		
+		'第一层菜单选择
+		Sql="select top 6 id,title,code from NB_Column where len(code)=4 And IsTop=-1 order by code"
+		Set rs=conn.execute(sql)
+		If Not rs.eof And Not rs.bof Then 
+			TopicList=rs.getrows()
+			rs.close:Set rs=Nothing
+			j=1		'初始化二级菜单标识号
+			For i=0 To Ubound(TopicList,2)
+				'生成一级菜单项
+				OutStr=OutStr&"mpmenu"&i+2&"=new mMenu('"&TopicList(1,i)&"','"&SiteInfo(11)&"ArticleList/Article_"&TopicList(0,i)&"_AddDate_Desc_1.Htm','self','','','','');"
+				OutStr=OutStr&Chr(10)
+				
+				OutStr_Clone=OutStr_Clone&"mpmenu"&i+2&"=new mMenu('"&TopicList(1,i)&"','list.asp?classid="&TopicList(0,i)&"','self','','','','');"
+				OutStr_Clone=OutStr_Clone&Chr(10)
+				
+				'筛选当次一级菜单的下属菜单（二级）
+				Sql="select top 6 id,title,code from NB_Column where left(code,4)='"&TopicList(2,i)&"' and len(code)=8 and id<>"&TopicList(0,i)&" And IsTop=-1 order by code"
+				Set rs=conn.execute(sql)
+				If Not rs.eof And Not rs.bof Then 
+					List=rs.getrows()
+					rs.close:Set rs=Nothing
+					For k=0 To Ubound(List,2)
+						'筛选当次二级菜单的下属菜单（三级）
+						Sql="select top 6 id,title from nb_column where left(code,8)='"&List(2,k)&"' and len(code)=12 and id<>"&List(0,k)&" And IsTop=-1 order by code"
+						Set rs=conn.execute(sql)
+						If rs.eof And rs.bof Then		'判断是否有第三层
+							OutStr=OutStr&"mpmenu"&i+2&".addItem(new mMenuItem('<img src="&SiteInfo(11)&"images/ye.gif> "&List(1,k)&"','"&SiteInfo(11)&"ArticleList/Article_"&List(0,k)&"_AddDate_Desc_1.Htm','self',false,'"&List(1,k)&"',null,'','','',''));"
+							OutStr=OutStr&Chr(10)
+							
+							OutStr_Clone=OutStr_Clone&"mpmenu"&i+2&".addItem(new mMenuItem('<img src=images/ye.gif> "&List(1,k)&"','list.asp?classid="&List(0,k)&"','self',false,'"&List(1,k)&"',null,'','','',''));"
+							OutStr_Clone=OutStr_Clone&Chr(10)
+						Else
+							OutStr=OutStr&"msub"&j&"=new mMenuItem('<img src="&SiteInfo(11)&"images/ye.gif> "&List(1,k)&"','"&SiteInfo(11)&"ArticleList/Article_"&List(0,k)&"_AddDate_Desc_1.Htm','self',false,'','1','','','','');"
+							OutStr=OutStr&Chr(10)
+							
+							OutStr_Clone=OutStr_Clone&"msub"&j&"=new mMenuItem('<img src=images/ye.gif> "&List(1,k)&"','list.asp?classid="&List(0,k)&"','self',false,'','1','','','','');"
+							OutStr_Clone=OutStr_Clone&Chr(10)
+							Do While Not rs.eof		'历遍第三层项目
+								OutStr=OutStr&"msub"&j&".addsubItem(new mMenuItem('<img src="&SiteInfo(11)&"images/doc.gif> "&rs(1)&"','"&SiteInfo(11)&"ArticleList/Article_"&rs(0)&"_AddDate_Desc_1.Htm','self',false,'"&rs(1)&"',null,'','','',''));"
+								OutStr=OutStr&Chr(10)
+								
+								OutStr_Clone=OutStr_Clone&"msub"&j&".addsubItem(new mMenuItem('<img src=images/doc.gif> "&rs(1)&"','list.asp?classid="&rs(0)&"','self',false,'"&rs(1)&"',null,'','','',''));"
+								OutStr_Clone=OutStr_Clone&Chr(10)
+								rs.movenext
+							Loop
+							OutStr=OutStr&"mpmenu"&i+2&".addItem(msub"&j&")"		'关闭当次第三层
+							OutStr=OutStr&Chr(10)
+							
+							OutStr_Clone=OutStr_Clone&"mpmenu"&i+2&".addItem(msub"&j&")"
+							OutStr_Clone=OutStr_Clone&Chr(10)
+							j=j+1
+						End If
+						rs.close
+					Next
+				End If
+			Next
+		End If
+	    OutStr=OutStr&"mwritetodocument();"
+	    OutStr_Clone=OutStr_Clone&"mwritetodocument();"
+		f1.Write OutStr
+		f1.close
+
+		file=Server.MapPath("../js/mune1.js")
+		Set f1 = fso.CreateTextFile(file, True)
+		f1.Write OutStr_Clone
+		f1.close		
+		
+		file=Server.MapPath("../js/searchbar.js")
+		Set f1 = fso.CreateTextFile(file, True)
+		
+		SQL="select id,title,code,info from [NB_Column] order by code"
+		Set rs=Conn.Execute(SQL)
+		If Not rs.EOF And Not rs.BOF Then
+			List=rs.getrows()
+			f1.Write "document.write ('<table border=""0"" align=""center"" cellpadding=""0"" cellspacing=""0"">');"&chr(10)
+			f1.Write "document.write ('<form method=""Get"" name=""SearchForm"" action="""&SiteInfo(11)&"Search.asp"" target=""_blank"">');"&chr(10)
+			f1.Write "document.write ('<tr>');"&chr(10)
+			f1.Write "document.write ('<td align=""center""><font color=""#000000"">站内文章搜索：</font></td>');"&chr(10)
+			f1.Write "document.write ('<td align=""center"">&nbsp;');"&chr(10)
+			f1.Write "document.write ('<select name=""field"">');"&chr(10)
+			f1.Write "document.write ('<option value=""0"">标题</option>');"&chr(10)
+			f1.Write "document.write ('<option value=""1"">内容</option>');"&chr(10)
+			f1.Write "document.write ('<option value=""2"">作者</option>');"&chr(10)
+			f1.Write "document.write ('</select>&nbsp;');"&chr(10)
+			f1.Write "document.write ('<select name=""column"">');"&chr(10)
+			f1.Write "document.write ('<option value=""0"">--栏 目--</option>');"&chr(10)
+			
+			For i=0 To Ubound(List,2)
+				Level=(Len(List(2,i))/4-1)
+				f1.Write "document.write ('<option value="""&List(0,i)&""">"
+				If Len(List(2,i))>4 Then f1.Write "├"
+				f1.Write String(Level,"-")
+				f1.Write List(1,i)&"</option>');"&chr(10)
+			Next
+			
+			f1.Write "document.write ('</select>&nbsp;<input name=""keyword"" type=""text"" value=""关键字"" onfocus=""this.className='+'iptA_Over'+';this.select();""  onblur=""this.className='+'iptA'+';"" size=""20"" maxlength=""50"">&nbsp;<input name=""Submit"" type=""submit"" class=""btnA""  value=""搜索"" onmouseover=""this.className='+'btnA_Over'+'"" onmouseout=""this.className='+'btnA'+'""></td>');"&chr(10)
+			f1.Write "document.write ('<td width=""10"" align=""center"">&nbsp;</td>');"&chr(10)
+			f1.Write "document.write ('</tr>');"&chr(10)
+			f1.Write "document.write ('</form>');"&chr(10)
+			f1.Write "document.write ('</table>');"&chr(10)
+		End if
+		f1.close
+
+		file=Server.MapPath("../js/friend.js")
+		Set f1 = fso.CreateTextFile(file, True)
+
+		f1.Write "document.write ('<table border=""0"" align=""center"" cellpadding=""0"" cellspacing=""0"" width=""90%"">');"&Chr(10)
+		f1.Write "document.write ('<tr>');"&Chr(10)
+		f1.Write "document.write ('<td align=""center""><marquee style=""word-break:break-all;FONT-SIZE: 9pt; LEFT: 2px; MARGIN-LEFT: 2px; WIDTH: 100%; TOP: 2px; HEIGHT: 100px; TEXT-ALIGN: center"" onMouseOver=this.stop() onMouseOut=this.start() scrollamount=1 scrolldelay=50 direction=up behavior=loop>');"&Chr(10)
+
+		SQL="Select Top 8 LinkURL,LinkImgPath,LinkName,LinkInfo From [NB_FriendLink] Where ColumnId=0 And State=-1 And Style=1 Order By OrderNum Desc"
+		Set Rs=Conn.Execute(SQL)
+		If Not rs.EOF And Not rs.BOF Then
+			List=rs.getrows()
+
+			For i=0 To UBound(List,2)
+				f1.Write "document.write ('<a href="""&List(0,i)&""" target=_blank><img src="""&List(1,i)&""" border=0 align=""absmiddle"" width=""88"" height=""31""><br>"&List(2,i)&"</a><br>');"&Chr(10)
+			Next
+		End If
+		f1.Write "document.write ('</marquee></td>');"&Chr(10)
+		f1.Write "document.write ('</tr>');"&Chr(10)
+		f1.Write "document.write ('<tr><td align=""center"" height=""5""></td>');"&Chr(10)
+		f1.Write "document.write ('</tr>');"&Chr(10)
+		f1.Write "document.write ('<tr><td align=""center"">');"&Chr(10)
+		f1.Write "document.write ('<select name=""textfriend"" onChange=""if(this.selectedIndex) window.open(this.options[this.selectedIndex].value);"">');"&Chr(10)
+		f1.Write "document.write ('<option value="""">--文字连接站点--</option>');"&Chr(10)
+
+		SQL="Select Top 10 LinkURL,LinkName From [NB_FriendLink] Where ColumnId=0 And State=-1 And Style=0 Order By OrderNum Desc"
+		Set Rs=Conn.Execute(SQL)
+		If Not rs.EOF And Not rs.BOF Then
+			List=rs.getrows()
+
+			For i=0 To UBound(List,2)
+				f1.Write "document.write ('<option value="""&List(0,i)&""">"&List(1,i)&"</option>');"&Chr(10)
+			Next
+		End If
+		f1.Write "document.write ('</select></td>');"&Chr(10)
+		f1.Write "document.write ('</tr>');"&Chr(10)
+		f1.Write "document.write ('<tr><td align=""center"" height=""5""></td>');"&Chr(10)
+		f1.Write "document.write ('</tr>');"&Chr(10)
+		f1.Write "document.write ('<tr><td align=""center"" height=""25""><a href=""#"" onclick=""javascript:window.open(\'ApplicationLink.asp\',\'\',\'height=320,width=550\')"">申请连接</a>&nbsp;&nbsp;<a href=""MoreLink.asp"" target=""_blank"">更多连接</a></td>');"&Chr(10)
+		f1.Write "document.write ('</tr>');"&Chr(10)
+		f1.Write "document.write ('</table>');"&Chr(10)
+		f1.close
+
+		ErrMsg="JS文件生成成功！"
+		Call Error(0)
+	Else
+		ErrMsg="对不起，服务器不支持FSO组件，JS未能生成！"
+		Call Error(1)
+	End If
+	
+End Function
+
+Function IsObjInstalled(strClassString)
+	On Error Resume Next
+	IsObjInstalled = False
+	Err = 0
+	Dim xTestObj
+	Set xTestObj = Server.CreateObject(strClassString)
+	If 0 = Err Then IsObjInstalled = True
+	Set xTestObj = Nothing
+	Err = 0
+End Function
+
+Function GetSiteSetting()
+	'****---------系统统计----------
+	Dim Ds
+	SQL="select TOP 1 info from [NB_System]"
+	Set Rs=Conn.Execute(SQL)
+	If Not rs.eof And Not rs.bof Then Ds=Split(rs(0),",")
+	GetSiteSetting=Ds
+End Function
+%>

@@ -1,0 +1,165 @@
+/* CSS Document */
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+#header {
+	width:950px;
+	margin:0 auto;
+	overflow:hidden;
+	clear:both;
+	margin-bottom:1px;
+	}
+#banner {
+	margin:0 auto;
+	width:950px;
+	clear:both;
+	overflow:hidden;
+	}
+#flash {
+	margin:0 auto;
+	width:950px;
+	clear:both;
+	overflow:hidden;
+	}
+#banner2 {
+	width:950px;
+	margin:0 auto;
+	clear:both;
+	overflow:hidden;
+	}
+#content {
+	width:950px;
+	margin:0 auto;
+	overflow:hidden;
+	clear:both;
+	margin-top:6px;
+	}
+#bottom {
+	width:950px;
+	margin:0 auto;
+	margin-top:8px;
+	background-color:#E3E3E3;
+	text-align:center;
+	}
+.font_white12 {
+	font-size:12px;
+	line-height:22px;
+	color:#FFFFFF;
+	text-decoration:none;
+	}
+.font_white13 {
+	font-size:13px;
+	color:#FFFFFF;
+	text-decoration:none;
+	}
+.font_blue {
+	color:#0365AF;
+	text-decoration:none;
+	font-size:13px;
+	}
+.font_black12 {
+	color:#5D5D5D;
+	font-size:12px;
+	text-decoration:none;
+	line-height:22px;
+	}
+.fl_left {
+	float:left;
+	}
+form {
+	padding:0px;
+	margin:0px;
+	}
+UL {
+	PADDING-RIGHT: 0px; 
+	PADDING-LEFT: 0px; 
+	PADDING-BOTTOM: 0px; 
+	MARGIN: 0px; 
+	PADDING-TOP: 0px; 
+text-decoration:none;
+	LIST-STYLE-TYPE: none;
+}
+LI {
+	PADDING-RIGHT: 0px; 
+	PADDING-LEFT: 0px; 
+	PADDING-BOTTOM: 0px;
+	MARGIN: 0px; 
+	PADDING-TOP: 0px; 
+	LIST-STYLE-TYPE: none;
+	height:22px;
+}
+li a:hover {
+	color:#FF6600;
+	text-decoration:underline;
+	}
+.ban_over {
+	background-image:url(../images/main_09.gif);
+	background-repeat:no-repeat;
+	width:103px;
+	
+	cursor:text;
+	text-align:center;
+	}
+.ban_out {
+	width:103px;
+
+	cursor:text;
+	text-align:center;
+	}
+.gonggao {
+	width:340px;
+	border:#CCCCCC 1px solid;
+	}
+.news {
+	width:340px;
+	border:#CCCCCC 1px solid;
+	margin-left:8px;
+	}
+.content_right {
+	width:250px;
+	float:right
+	}
+.search {
+	width:250px;
+	border:#CCCCCC 1px solid;
+	}
+.btn_search {
+	background-image:url(../images/main_42.gif);
+	width:50px;
+	height:18px;
+	border:none;
+	cursor:hand;
+	}
+input {
+	border:#B4B4B4 solid 1px;
+	background-color:#F1F1F1;
+	}
+
+
+
+TD {
+	FONT-SIZE: 9pt; LINE-HEIGHT: 140%
+}
+BODY {
+	FONT-SIZE: 9pt; BaCKGROUND-IMaGE: url(images/bg.gif); LINE-HEIGHT: 140%
+}
+a:link {
+	TEXT-DECORaTION: none
+}
+a:visited {
+	TEXT-DECORaTION: none
+}
+a:active {
+	TEXT-DECORaTION: none
+}
+a:hover {
+	TEXT-DECORaTION: underline
+}
+
+
+  BODY {
+	MARGIN-TOP: 10px
+}

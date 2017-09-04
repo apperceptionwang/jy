@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections;
+using System.Configuration;
+using System.Data;
+
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+//51aspx
+
+using DataEntity;
+using DataBusiness;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+public partial class json_TreeJson : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        string param = Request["Param"];
+        if (param == "0")
+        {
+            List<ExtTreeNode> nodes = new List<ExtTreeNode>();
+            string res = "";
+            try
+            {
+                DataSet ds = SampleBusiness.GetMoreRow(Convert.ToString(param));
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        DataRow row = ds.Tables[0].Rows[i] as DataRow;
+                        ExtTreeNode node = new ExtTreeNode();
+                        node.id = Convert.ToString(row["ID"]);
+                        node.parentNodeId = param;
+                        node.IsRoot = false;
+                        node.leaf = false;
+                        node.draggable = true;
+                        node.text = Convert.ToString(row["TypeCName"]);
+                        node.TypeID = Convert.ToString(row["ID"]);
+                        node.PID = Convert.ToString(param);
+                        node.TypeTitle = Convert.ToString(row["TypeCName"]);
+                        node.TypeEName = Convert.ToString(row["TypeCName"]);
+                        node.DelFlag = Convert.ToBoolean(row["DelFlag"]);
+                        nodes.Add(node);
+                    }
+                }
+                res = JavaScriptConvert.SerializeObject(nodes);
+            }
+            catch (Exception ee)
+            {
+                string error = ee.Message;
+            }
+
+            Response.Write(res);
+        }
+        else
+        {
+            //5-1-a-s-p-x
+            if (Request["node"] == null || Convert.ToString(Request["node"]) == "")
+                return;
+            List<ExtTreeNode> nodes = new List<ExtTreeNode>();
+            string res2 = "";
+            try
+            {
+                DataSet ds = SampleBusiness.GetMoreRow(Convert.ToString(Request["node"]));
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                    {
+                        DataRow row = ds.Tables[0].Rows[i] as DataRow;
+                        ExtTreeNode node = new ExtTreeNode();
+                        node.id = Convert.ToString(row["ID"]);
+                        node.parentNodeId = Convert.ToString(Request["node"]); 
+                        node.IsRoot = false;
+                        node.leaf = (SampleBusiness.HasChildNode(node.id));
+                        node.draggable = true;
+                        node.text = Convert.ToString(row["TypeCName"]);
+                        node.TypeID = Convert.ToString(row["ID"]);
+                        node.PID = Convert.ToString(Request["node"]);
+                        node.TypeTitle = Convert.ToString(row["TypeCName"]);
+                        node.TypeEName = Convert.ToString(row["TypeCName"]);
+                        node.DelFlag = Convert.ToBoolean(row["DelFlag"]);
+                        nodes.Add(node);
+                    }
+                }
+                res2 = JavaScriptConvert.SerializeObject(nodes);
+            }
+            catch (Exception ee)
+            {
+                string error = ee.Message;
+            }
+
+            Response.Write(res2);
+        }
+    }
+}

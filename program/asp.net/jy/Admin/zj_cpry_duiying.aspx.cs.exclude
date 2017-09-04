@@ -1,0 +1,99 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+
+public partial class Admin_zj_cpry_duiying : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //if (Session["admin_name"] == null)
+        //{
+        //    Response.Write("<script>alert('页面失效，请您重新登录！');location.href = './admin_login.aspx';</script>");
+        //    return;
+        //}
+        if (!IsPostBack)
+        {
+            string str_sql = "select sfzh,UserName +'  现从事的专业领域：'+iif(isnull(xcszyly),'',xcszyly)+'  熟悉的专业领域：'+iif(isnull(sxzyly),'',sxzyly) from pszj";
+            ddlist_zj.Items.Clear();
+            DBFun.FillDwList(ddlist_zj, str_sql);
+            bindData();
+        }
+    }
+    protected void bindData()
+    {
+       string str_sql = "SELECT ID,sfzh, yourname,xingbie, " +
+                           " iif(DateDiff('YYYY', CDate(iif(isnull(birth),now,birth)),Format(Now(),'yyyy-mm-dd'))=0,'',DateDiff('YYYY', CDate(iif(isnull(birth),now,birth)),Format(Now(),'yyyy-mm-dd'))) AS nianling," +
+                           " xrzw, sbzw, sh_flag,edit_flag,fenlei,cpry.tj_flag,t_dict.tj_flag,t_dict.name as gzdw,csgz FROM cpry,t_dict" +
+                           " where url = gzdw and t_dict.tj_flag = true and edit_flag = false and cpry.tj_flag = '推荐' ";
+        str_sql = str_sql + " and sh_flag = '通过' and isnull(fenlei) ";
+        str_sql = str_sql + " ORDER BY gzdw asc , ID asc;";
+        Session["dv_wfp"] = DBFun.GetDataView(str_sql);
+        DataView dv = (DataView)Session["dv_wfp"];
+        gv_wfp.DataSource = dv;
+        gv_wfp.DataBind();
+
+
+        str_sql = "SELECT ID,sfzh, yourname,xingbie, " +
+                           " iif(DateDiff('YYYY', CDate(iif(isnull(birth),now,birth)),Format(Now(),'yyyy-mm-dd'))=0,'',DateDiff('YYYY', CDate(iif(isnull(birth),now,birth)),Format(Now(),'yyyy-mm-dd'))) AS nianling," +
+                           " xrzw, sbzw, sh_flag,edit_flag,fenlei,cpry.tj_flag,t_dict.tj_flag,t_dict.name as gzdw,csgz FROM cpry,t_dict" +
+                           " where url = gzdw and t_dict.tj_flag = true and edit_flag = false and cpry.tj_flag = '推荐' ";
+        str_sql = str_sql + " and sh_flag = '通过' and fenlei ='" + ddlist_zj.SelectedValue + "' ";
+        str_sql = str_sql + " ORDER BY gzdw asc , ID asc;";
+        Session["dv_yfp"] = DBFun.GetDataView(str_sql);
+        dv = (DataView)Session["dv_yfp"];
+        gv_yfp.DataSource = dv;
+        gv_yfp.DataBind();
+    }
+    
+    protected void btn_add_Click(object sender, EventArgs e)
+    {
+        //string strOpid = "";
+        //string str_sql;
+        //int i_ryid, i_zjid;
+        //CheckBox ckb;
+        //for (int i = 0; i < gv_zhuanjia.Rows.Count; i++)
+        //{
+        //    ckb = (CheckBox)gv_zhuanjia.Rows[i].FindControl("cbx_select");
+        //    if (ckb.Checked)
+        //    {
+        //        i_zjid = Convert.ToInt32(gv_zhuanjia.Rows[i].Cells[0].Text);
+        //        for (int j = 0; j < gv_chengyuan.Rows.Count; j++)
+        //        {
+        //            ckb = (CheckBox)gv_chengyuan.Rows[j].FindControl("CheckBox1");
+        //            if (ckb.Checked)
+        //            {
+        //                i_ryid = Convert.ToInt32(gv_chengyuan.Rows[j].Cells[0].Text);
+        //                str_sql = string.Format("select count(*) from zjry where zjid={0} and ryid ={1}",
+        //                    i_zjid, i_ryid);
+        //                if (DBFun.ExecuteScalar(str_sql).ToString() != "1")
+        //                {
+        //                    str_sql = string.Format("insert into zjry (zjid,ryid) values ({0},{1})",
+        //                       i_zjid, i_ryid);
+        //                    if (!DBFun.ExecuteUpdate(str_sql))
+        //                    {
+        //                        continue;
+        //                    }
+
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //Response.Write("<script>alert('保存成功！');</script>");
+    }
+    protected void btn_del_Click(object sender, EventArgs e)
+    {
+
+    }
+    protected void ddlist_zj_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //bindData();
+    }
+}

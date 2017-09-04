@@ -1,0 +1,260 @@
+/* CSS Document */
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 00px;
+	margin-bottom: 0px;
+}
+#header {
+	width:100%;
+	background-image:url(../images/zs_02.gif);
+	background-repeat:repeat-x;
+	clear:both;
+	overflow:hidden;
+	height:92px;
+	}
+#flash {
+	width:950px;
+	margin:0 auto;
+	clear:both;
+	overflow:hidden;
+	}
+#banner {
+	width:950px;
+	margin:0 auto;
+	background-image:url(../images/zs_29.gif);
+	background-repeat:repeat-x;
+	height:40px;
+	}
+#content {
+	width:950px;
+	margin:0 auto;
+	overflow:hidden;
+	clear:both;
+	margin-top:8px;
+	}
+#bottom {
+	width:950px;
+	margin:0 auto;
+	margin-top:8px;
+	background-color:#E3E3E3;
+	text-align:center;
+	}
+.weather {
+	float:left;
+	width:180px;
+	background-color:#E5E7EA;
+	border-left:solid 1px #D1D2D4;
+	border-bottom:none;
+	border-right:none;
+	border-top:none;
+	height:215px;
+	}
+.flash2 {
+	float:right;
+	}
+.font_black12{
+	font-size:12px;
+	line-height:20px;
+	color:#000000;
+	text-decoration:none;
+	}
+.font_black13 {
+	font-size:13px;
+	color:#000000;
+	text-decoration:none;
+	}
+.font_blue {
+	font-size:12px;
+	color:#002E72;
+	text-decoration:none;
+	line-height:22px;
+	}
+.font_white {
+	font-size:12px;
+	color:#FFFFFF;
+	text-decoration:none;
+	line-height:20px;
+	}
+.font_title_blue {
+	font-size:16px;
+	color:#3062A6;
+	font-weight:bold;
+	line-height:20px;
+	text-decoration:none;
+	}
+.font_title_red {
+	font-size:16px;
+	color:#FF6400;
+	font-weight:bold;
+	line-height:20px;
+	text-decoration:none;
+	}
+.content_left {
+	width:210px;
+	float:left;
+	}
+.content_center {
+	margin-left:12px;
+	float:left;
+	width:502px;
+	}
+.content_right {
+	float:right;
+	width:210px;
+	}
+.menu_con {
+	border-left:#C8D6DE solid 1px;
+	border-right:#C8D6DE solid 1px;
+	border-bottom:none;
+	border-top:none;
+	}
+.download {
+	border:#889FAB solid 1px;
+	margin-top:8px;
+	}
+.pic {
+	width:208px;
+	padding:2px;
+	border:#C7C7C7 solid 1px;
+	}
+form {
+	padding:0px;
+	margin:0px;
+	}
+input {
+	border:#B7B7B7 solid 1px;
+	background-color:#F1F1F1;
+	}
+UL {
+	PADDING-RIGHT: 0px; 
+	PADDING-LEFT: 0px; 
+	PADDING-BOTTOM: 0px; 
+	MARGIN: 0px; 
+	PADDING-TOP: 0px; 
+	LIST-STYLE-TYPE: none;
+}
+LI {
+	PADDING-RIGHT: 0px; 
+	PADDING-LEFT: 0px; 
+	PADDING-BOTTOM: 0px;
+	MARGIN: 0px; 
+	PADDING-TOP: 0px; 
+	LIST-STYLE-TYPE: none;
+	height:22px;
+	background-image:url(../images/zs_79.gif);
+	background-repeat:repeat-x;
+	background-position:bottom;
+}
+li a:hover {
+	color:#FF6600;
+	text-decoration:underline;
+	}
+.btn_search {
+	background-image:url(../images/zs_08.gif);
+	width:51px;
+	height:23px;
+	border:none;
+	cursor:pointer;
+	}
+.btn_submit {
+	background-image:url(../images/question_61.gif);
+	background-repeat:repeat-x;
+	height:22px;
+	border:1px solid #CCCCCC;
+	font-size:12px;
+	font-weight:bold;
+	}
+.menu_con a:hover {
+	color:#FF6600;
+	text-decoration:underline;
+	}
+.title_red {
+	background-color:#FF6400;
+	width:300px;
+	padding:2px;
+	height:12px;
+	color:#FFFFFF;
+	text-align:center;
+	font-size:13px;
+	}
+.dot_line {
+	background-image:url(../images/question_53.gif);
+	background-repeat:repeat-x;
+	height:2px;
+	clear:both;
+	overflow:hidden;
+	}
+.box_black {
+	background-color:#F5F5F5;
+	border:1px dotted #C8C8C8;
+	margin:10px;
+	}
+.box_blue {
+	background-color:#FFFFFF;
+	border:1px solid #97B9D2;
+	margin:10px;
+	}
+.font_blue2 {
+	color:#304C93;
+	font-size:12px;
+	line-height:20px;
+	text-decoration:none;
+	}
+.font_red {
+	color:#DA0001;
+	font-size:12px;
+	text-decoration:none;
+	line-height:20px;
+	}
+.font_black13 {
+	color:#393939;
+	font-size:13px;
+	text-decoration:none;
+	line-height:22px;
+	}
+.fl_left {
+	float:left;
+	}
+.title_red {
+	background-color:#FF6400;
+	width:150px;
+	padding:2px;
+	height:18px;
+	color:#FFFFFF;
+	text-align:center;
+	font-size:13px;
+	}
+.left220 {
+	width:220px;
+	float:left;
+	}
+.table_title {
+	background-color:#2893CB;
+	color:#FFFFFF;
+	text-align:center;
+	font-size:13px;
+	font-weight:bold;
+	line-height:20px;
+	}
+.table_row {
+	background-color:#FFFFFF;
+	color:#333333;
+	font-size:13px;
+	line-height:20px;
+	}
+a:link {
+color:#000000;
+	TEXT-DECORaTION: none
+}
+a:visited {
+color:#000000;
+	TEXT-DECORaTION: none
+}
+a:active {
+color:#000000;
+	TEXT-DECORaTION: none
+}
+a:hover {
+	TEXT-DECORaTION: underline
+}

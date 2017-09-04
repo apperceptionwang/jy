@@ -1,0 +1,89 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Collections;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using System.Web.UI.HtmlControls;
+using System.IO;
+
+public partial class user : System.Web.UI.Page
+{
+    string str_sql;
+    DataView dv;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["appNo"] == null)
+        {
+            Response.Redirect("./SessionTimeOut.aspx?type=top");
+        }
+        if (Session["xmbh"] == null)
+        {
+            Response.Write("<script>alert('尚未选择相应项目，请选择项目后再操作！');location.href = './user_main.aspx';</script>");
+            return;
+        }
+        if (!IsPostBack)
+        {
+            bindData();
+        }   
+        
+    }
+
+    protected void bindData()
+    {
+        str_sql = "SELECT sqr,zqbg_dName,zqbg from t_teacher_list where appNo = '" + Session["appNo"].ToString() + "';";
+        DataRow dr = DBFun.GetDataRow(str_sql);
+        if (dr == null) return;
+        string str_sqr = dr["sqr"].ToString();
+        string str_filename = dr["zqbg"].ToString();
+        if (str_filename == "")
+        {
+            Response.Write("<script>alert('尚未上传期中检查申请表！');</script>");
+            return;
+        }
+        string str_extName = str_filename.Substring(str_filename.LastIndexOf(".")).ToUpper();
+        string str_newfilename = "教研课题(中期检查申请表)_" + str_sqr + "_" + Session["xmbh"].ToString() + str_extName;
+        string str_MapPath = Server.MapPath("./中期检查申请表/");
+        if (!File.Exists(str_MapPath + str_filename))
+        {
+            Response.Write("<script>alert('尚未上传期中检查申请表！');</script>");
+            return;
+        }
+        File.Copy(str_MapPath + str_filename, str_MapPath + str_newfilename, true);
+        hl_1.NavigateUrl = "./中期检查申请表/" + str_newfilename;
+    }
+
+    protected void btn_upload_Click(object sender, EventArgs e)
+    {
+        string str_pra = CommFun.UploadFile(fu_1, "中期检查申请表", Session["xmbh"].ToString());
+        if (str_pra == "" || str_pra == ",") 
+            return;
+		else if (str_pra.Substring(0, 5) == "不允许上传")
+        {
+            Response.Write("<script>alert('" + str_pra + "！');</script>");
+            return;
+        }
+        str_sql = string.Format("update t_teacher_list set zqbg = '{0}',zqbg_dName = '{1}' where appNo = '{2}'",
+            str_pra.Substring(str_pra.IndexOf(",") + 1), str_pra.Substring(0, str_pra.IndexOf(",")), Session["appNo"].ToString());
+        try
+        {
+            if (DBFun.ExecuteUpdate(str_sql))
+            {
+                Response.Write("<script>alert('保存成功！');</script>");
+                bindData();
+            }
+            else
+            {
+                Response.Write("<script>alert('保存失败！');</script>");
+            }
+        }
+        catch (Exception ee)
+        {
+            Response.Write("<script>alert('" + ee.Message.Replace("'", "|") + "');</script>");
+        }
+    }
+
+}
